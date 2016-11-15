@@ -1,0 +1,63 @@
+extends layout
+
+block content
+  body(data-ng-app="AirportMainApp",data-ng-controller="indexController")
+    h1= title
+    p Bem vindo a #{title}
+
+    <!-- Buttap trigger modal -->
+    div.well
+      button.btn.btn-primary.btn-lg(type="button", data-toggle="modal", data-target="#myModal")
+        | Adicionar
+
+    <!-- Quadrado dos avioes TODO: fazer um mixin disso? -->
+    div.col-lg-4.col-md-6(data-ng-repeat="plane in planes")
+      div.list-group
+        a.list-group-item(href="#")
+          <!-- Header -->
+          h4.list-group-item-heading
+            <!-- Icone do aviao -->
+            div.glyphicon.glyphicon-plane(aria-hidden="true")
+            | &nbsp; Modelo - {{plane.modelo}}
+            <!-- X -->
+            button.close(type="button", data-dismiss="modal", aria-label="Close", data-ng-click="deletePlane(plane)")
+              span(aria-hidden="true") &times;
+          a.list-group-item(href="#") Quantidade maxima de passageiros : {{plane.max_passageiros}}
+          a.list-group-item(href="#") Quantidade maxima de carga : {{plane.max_carga}} KG
+          a.list-group-item(href="#") Data da aquisição : {{plane.data_aquisicao | date}}
+          a.list-group-item(href="#") Companhia : {{plane.companhia}}
+
+
+  <!-- Modal de adicionar -->
+  div#myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel")
+    div.modal-dialog(role="document")
+      div.modal-content
+        div.modal-header
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true") &times;
+          h4#myModalLabel.modal-title Adicionar modelo
+        div.modal-body
+          form#planeForm
+            div.form-group
+              label(for="modelo") Modelo
+                input#modelo.form-control(required="true", type="text",name="modelo")
+            div.form-group
+              label(for="max_passageiros") Quantidade maxima de passageiros &nbsp;
+                input#max_passageiros.form-control(required="true", type="number",name="max_passageiros")
+            div.form-group
+              label(for="max_carga") Quantidade maxima de carga &nbsp;
+                input#max_carga.form-control(required="true", type="number",name="max_carga")
+            div.form-group
+              label(for="data_aquisicao") Data da aquisição &nbsp;
+                input#data_aquisicao.form-control(required="true",type="date",name="data_aquisicao")
+            div.form-group
+              label(for="companhia") Companhia &nbsp;
+                input#companhia.form-control(required="true",type="text",name="companhia")
+
+        div.modal-footer
+          button#clear.btn.btn-default(type="clear",) Limpar
+          button#add.btn.btn-primary(type="submit",data-dismiss="modal") Adicionar
+
+
+  script(type='text/javascript', src='/vendor/parsley.js')
+  script(type='text/javascript', src='/javascripts/planesModule.js')
