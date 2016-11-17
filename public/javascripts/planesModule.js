@@ -56,6 +56,10 @@
                         getPlanes();
                         form.trigger("reset")
                     })
+                    .fail(function(){
+                        console.error.apply(this,arguments);
+                    });
+
             } else{
                 alert("Todos os campos devem ser preenchidos.");
             }
