@@ -20,7 +20,7 @@
      */
 
     /*global angular*/
-    angular.module('AirportMainApp',[]);
+    angular.module('AirportMainApp',['ngMaterial']);
 
     /**
      * TODO:Move controller to a separated file.
