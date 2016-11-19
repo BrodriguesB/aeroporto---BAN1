@@ -5,58 +5,67 @@ block content
     h1= title
     p Bem vindo a #{title}
 
-    <!-- Buttap trigger modal -->
-    div.well
-      button.btn.btn-primary.btn-lg(type="button", data-toggle="modal", data-target="#myModal")
-        | Adicionar
+    <!-- Button trigger modal -->
+    div
+      md-button(ng-click="showAdvanced($event)") Adicionar
 
-    <!-- Quadrado dos avioes TODO: fazer um mixin disso? -->
-    div.col-lg-4.col-md-6(data-ng-repeat="plane in planes")
-      div.list-group
-        a.list-group-item(href="#")
-          <!-- Header -->
-          h4.list-group-item-heading
-            <!-- Icone do aviao -->
-            div.glyphicon.glyphicon-plane(aria-hidden="true")
-            | &nbsp; Modelo - {{plane.modelo}}
-            <!-- X -->
-            button.close(type="button", data-dismiss="modal", aria-label="Close", data-ng-click="deletePlane(plane)")
-              span(aria-hidden="true") &times;
-          a.list-group-item(href="#") Quantidade maxima de passageiros : {{plane.max_passageiros}}
-          a.list-group-item(href="#") Quantidade maxima de carga : {{plane.max_carga}} KG
-          a.list-group-item(href="#") Data da aquisição : {{plane.data_aquisicao | date}}
-          a.list-group-item(href="#") Companhia : {{plane.companhia}}
-
-
-  <!-- Modal de adicionar -->
-  div#myModal.modal.fade(tabindex="-1", role="dialog", aria-labelledby="myModalLabel")
-    div.modal-dialog(role="document")
-      div.modal-content
-        div.modal-header
-          button.close(type="button", data-dismiss="modal", aria-label="Close")
-            span(aria-hidden="true") &times;
-          h4#myModalLabel.modal-title Adicionar modelo
-        div.modal-body
-          form#planeForm
-            div.form-group
+    md-content.md-padding(layout-xs="column", layout="column")
+      div(flex-xs="80", flex-gt-xs="50", layout="row")
+        //- List
+        md-card(ng-repeat="plane in planes")
+          md-card-title
+            md-card-title-text
+              span.md-headline Modelo - {{plane.modelo}}
+          md-card-content
+            md-list
+              md-list-item
+                p Quantidade maxima de passageiros : {{plane.max_passageiros}}
+              md-list-item
+                p Quantidade maxima de carga : {{plane.max_carga}} KG
+              md-list-item
+                p Data da aquisição : {{plane.data_aquisicao | date}}
+              md-list-item
+                p Companhia : {{plane.companhia}}
+          md-card-actions(layout="row", layout-align="end center")
+            md-button
+              md-icon.material-icons.md-ligh.md-avatar-icon(ng-click="") edit
+            md-button
+              md-icon.material-icons.md-ligh.md-avatar-icon(ng-click="deletePlane(plane)") close
+  script(type="text/ng-template" id="dialog1.tmpl.html")
+    md-dialog(layout-padding="",style="min-width:500px;")
+      form(ng-cloak)
+        //- Edit | Add
+        md-title
+          h3(layout-gt-xs="row")
+            md-input-container.md-block(flex-gt-xs)
               label(for="modelo") Modelo
-                input#modelo.form-control(required="true", type="text",name="modelo")
-            div.form-group
-              label(for="max_passageiros") Quantidade maxima de passageiros &nbsp;
-                input#max_passageiros.form-control(required="true", type="number",name="max_passageiros")
-            div.form-group
-              label(for="max_carga") Quantidade maxima de carga &nbsp;
-                input#max_carga.form-control(required="true", type="number",name="max_carga")
-            div.form-group
-              label(for="data_aquisicao") Data da aquisição &nbsp;
-                input#data_aquisicao.form-control(required="true",type="date",name="data_aquisicao")
-            div.form-group
-              label(for="companhia") Companhia &nbsp;
-                input#companhia.form-control(required="true",type="text",name="companhia")
+              input#modelo.md-input(ng-model="currentManagedCard.modelo", aria-invalid="false",name="modelo",md-autofocus)
+            md-input-container
+              md-button.md-icon-button.md-primary(aria-label="Profile",ng-click="cancel()",style="display:inline-block;top: -35px;")
+                md-icon.material-icons close
 
-        div.modal-footer
-          button#clear.btn.btn-default(type="clear",) Limpar
-          button#add.btn.btn-primary(type="submit",data-dismiss="modal") Adicionar
+        md-dialog-content(layout-padding)
+          md-input-container.md-block(flex-gt-sm)
+            label(for="max_passageiros") Quantidade maxima de passageiros
+            input#max_passageiros.md-input(ng-model="currentManagedCard.max_passageiros", aria-invalid="true",name="max_passageiros", type="number")
+
+          md-input-container.md-block(flex-gt-sm)
+            label(for="max_carga") Quantidade maxima de carga
+            input#max_carga.md-input(ng-model="currentManagedCard.max_carga", aria-invalid="true",name="max_carga", type="number")
+
+          md-input-container.md-block(flex-gt-sm)
+            label(for="data_aquisicao") Data da aquisição
+            md-datepicker#data_aquisicao(ng-model="currentManagedCard.data_aquisicao", aria-invalid="true",name="data_aquisicao")
+
+          md-input-container.md-block(flex-gt-sm)
+            label(for="companhia") Companhia
+            input#companhia.md-input(ng-model="currentManagedCard.companhia", aria-invalid="true",name="companhia")
+        md-dialog-actions(layout="row", layout-align="end center")
+          md-button(type="clear")
+            md-icon.material-icons.md-ligh.md-avatar-icon refresh
+          md-button
+            md-icon.material-icons.md-ligh.md-avatar-icon(ng-click="answer(currentManagedCard)") done
+
 
 
   script(type='text/javascript', src='/javascripts/planesModule.js')

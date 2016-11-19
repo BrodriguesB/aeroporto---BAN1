@@ -25,7 +25,58 @@
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('AirportMainApp').controller('indexController', function ($scope, $http) {
+    angular.module('AirportMainApp').controller('indexController', function ($scope, $http,$mdDialog) {
+
+        $scope.currentManagedCard = undefined;
+
+        $scope.editModel = {
+            modelo:'',
+            max_passageiros:'',
+            max_carga:'',
+            data_aquisicao:'',
+            companhia:''
+        };
+
+        $scope.showAdvanced = function(ev) {
+            $mdDialog.show({
+                controller: DialogController,
+                templateUrl: 'dialog1.tmpl.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true,
+                fullscreen: false // Only for -xs, -sm breakpoints.
+            }).then(function(answer) {
+                let converted = angular.toJson(answer);
+
+                if (!converted || converted.indexOf('undefined')==-1){
+                    console.error("There were undefined data, all fields are required");
+                    return;
+                }
+
+                $http.post('/api/avioes',converted)
+                    .then(function(response){
+                        $scope.planes = response.data;
+                        console.info("Adicionado ",answer.modelo); //TODO:Call toaster.
+                    });
+            }, function() {
+                console.log('You cancelled the dialog.');
+            });
+        };
+
+        function DialogController($scope, $mdDialog) {
+            $scope.hide = function() {
+                $mdDialog.hide();
+            };
+
+            $scope.cancel = function() {
+                $mdDialog.cancel();
+            };
+
+            $scope.answer = function(answer) {
+                $mdDialog.hide(answer);
+            };
+        }
+
 
         //Pega os avioes
         function getPlanes(){
@@ -36,34 +87,13 @@
 
         $scope.deletePlane = function (plane){
             console.debug(plane.registro);
-            $.ajax({
-                url: '/api/avioes/'+plane.registro,
-                type: 'DELETE',
-                success: function (result) {
-                    getPlanes();
+            $http.delete('/api/avioes/'+plane.registro)
+                .success(function (response) {
+                    $scope.planes = response.data;
                     console.info("Removed plane.")
-                }
             });
         };
 
-
-        $('#add').click(function(){
-            var form = $('#planeForm');
-
-            if(form.parsley().isValid()) {
-                $.post('/api/avioes', form.serialize())
-                    .done(function () {
-                        getPlanes();
-                        form.trigger("reset")
-                    })
-                    .fail(function(){
-                        console.error.apply(this,arguments);
-                    });
-
-            } else{
-                alert("Todos os campos devem ser preenchidos.");
-            }
-        });
 
         getPlanes();
 

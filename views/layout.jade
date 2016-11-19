@@ -2,12 +2,18 @@ doctype html
 html
   head
     title= title
+
+    <!-- Fonts -->
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons",rel="stylesheet")
+
     <!-- Css / less -->
+    meta(name="viewport", content="initial-scale=1, maximum-scale=1, user-scalable=no")
+    link(rel="stylesheet" ,href="/bower_components/angular-material/angular-material.css")
     link(rel='stylesheet', href='/stylesheets/style.css')
 
     <!-- Js -->
     script(type='text/javascript', src="/bower_components/jquery/dist/jquery.min.js")
-    script(type='text/javascript', src='/vendor/parsley.js')
+    script(type='text/javascript', src='/bower_components/parsleyjs/dist/parsley.min.js')
 
     <!-- Angular & Angular material -->
     script(type='text/javascript', src="/bower_components/angular/angular.js")
@@ -15,5 +21,4 @@ html
     script(type='text/javascript', src="/bower_components/angular-animate/angular-animate.js")
     script(type='text/javascript', src="/bower_components/angular-material/angular-material.js")
 
-  include menu
   block content
