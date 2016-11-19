@@ -48,7 +48,7 @@
             }).then(function(answer) {
                 let converted = angular.toJson(answer);
 
-                if (!converted || converted.indexOf('undefined')==-1){
+                if (!converted || converted.indexOf('undefined')!=-1){
                     console.error("There were undefined data, all fields are required");
                     return;
                 }
