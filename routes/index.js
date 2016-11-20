@@ -27,48 +27,122 @@ function generateInsertQueryWith(obj,bd){
     return generated;
 }
 
-function getKeysAndArrayFor(obj){
-    let keys = Object.keys(obj);
-    let joined = keys.join(); // keys like (foo,bar)
-    let values = ''; //counters like $1m
-    let arr = []; //Arr, as second parameter.
 
-    let x = 1;
-    do {
-        values+=`$${x},`;
-        arr.push(obj[keys[x-1]]);
-    }
-    while(x++<keys.length-1);
-    values+=`$${x}`;
-    arr.push(obj[keys[x-1]]);
-
-    return {columns:joined,counters:values,data:arr};
-
+/**
+ * Helper query object
+ * @param {string} columns - like 'foo,bar,foobar'.
+ * @param {string} counters - like $1,$2.
+ * @param {Array} data - [valueone,valuetwo].
+ */
+function HelperModel(columns,counters,data){
+    this.columns = columns;
+    this.counters = counters;
+    this.data = data;
 }
 
 //TODO:finish
 class QueryBuilder {
 
-    static get TYPE() {
-        return {
-            CREATE: 1,
-            READ:   2,
-            UPDATE: 3,
-            DELETE: 4
-        };
+
+    /***
+     * Build and return helper object
+     * @return {HelperModel}
+     */
+    static buildQueryObjectHelper(obj){
+        let keys = Object.keys(obj);
+        let joined = keys.join(); // keys like (foo,bar)
+        let values = ''; //counters like $1,$2
+        let arr = []; //Arr, as second parameter.
+
+        let x = 1;
+        do {
+            values+=`$${x},`;
+            arr.push(obj[keys[x-1]]);
+        }
+        while(x++<keys.length-1);
+        values+=`$${x}`;
+        arr.push(obj[keys[x-1]]);
+
+        return new HelperModel(joined,values,arr);
     }
 
-    set queryType(type){
-        this._queryType = type;
+
+    constructor(table){
+        this.table = table;
+        this.client = undefined;
+        this.baseObject = undefined;
+        this.helperObject = undefined;
     }
 
-    constructor(dataBase,originalObject,queryType){
-        this.dataBase = dataBase;
-        this.originalObject = originalObject;
-        this.queryType = queryType;
-
+    setBaseObject(baseObject){
+        this.baseObject = baseObject;
+        this.helperObject = QueryBuilder.buildQueryObjectHelper(baseObject);
     }
+
+    setClient(client){
+        this.client = client;
+    }
+
+
+    /**
+     * Create query.
+     * @return {string}
+     */
+    CREATE() {
+        return `INSERT INTO public."${this.table}"(${this.helperObject.columns}) VALUES (${this.helperObject.counters})`;
+    }
+    /**
+     * Create query.
+     * @return {string}
+     */
+    DELETE(whereObj) {
+        return `INSERT INTO public."${this.table}"(${this.helperObject.columns}) VALUES (${this.helperObject.counters})`;
+    }
+    /**
+     * Create query.
+     * @return {string}
+     */
+    UPDATE(colsObj) {
+        return `INSERT INTO public."${this.table}"(${this.helperObject.columns}) VALUES (${this.helperObject.counters})`;
+    }
+    /**
+     * Read query.
+     * @param [cond] TODO
+     * @return {string}
+     */
+    READ(cond = false) {
+        return `SELECT * FROM public."${this.table}"`;
+    }
+
+    /**
+     * Executes the given query.
+     * @param query { String } - Query to execute.
+     * @param data  [ Array ] - optional array values data.
+     * @param [allRequired] - If true check for undefined on the query. Default value is true.
+     * @return {Boolean | Object} false if error, query(for callbacks) if success*/
+    exec(query,data,allRequired = true){
+        console.log(query);
+        //If all fields are required, and there's an undefined one.
+        if(allRequired && query.indexOf('undefined')!=-1) {
+            return false;
+        }
+
+        let ret;
+        try {
+            ret = data ? this.client.query(query,data) : this.client.query(query);
+        } catch(e){
+            return false;
+        }
+
+        return ret;
+    }
+
+
 }
+
+
+const planesQB = new QueryBuilder("Avioes");
+
 /*------------------------*\
         CRUD - Avioes
 \*------------------------*/
@@ -86,38 +160,29 @@ router.post('/api/avioes', function (req, res, next) {
             return res.status(500).json({success: false, data: err});
         }
 
-        var data = {};
-        data.modelo             = req.body.modelo;
-        data.max_passageiros   = req.body.max_passageiros;
-        data.max_carga          = req.body.max_carga;
-        data.data_aquisicao     = req.body.data_aquisicao;
-        data.companhia           = req.body.companhia;
+        //Configs query builder to this context.
+        planesQB.setBaseObject(req.body);
+        planesQB.setClient(client);
 
-        let insert = generateInsertQueryWith(req.body,"Avioes");
+        //execute query.
+        let create = planesQB.exec(planesQB.CREATE(),planesQB.helperObject.data);
 
-        //Se ninguem foi omitido.
-        if(insert.query.indexOf('undefined')==-1) {
-
-
-            // SQL Query > Insert Data
-            client.query(insert.query,insert.data);
-
-            // SQL Query > Select Data
-            const query = client.query('SELECT * FROM public."Avioes";');
-
+        //if query succeeded
+        if(create){
+            //Read the table
+            let select = planesQB.exec(planesQB.READ());
             // Stream results back one row at a time
-            query.on('row', function (row) {
+            select.on('row', function (row) {
                 results.push(row);
             });
             // After all data is returned, close connection and return results
-            query.on('end', function () {
+            select.on('end', function () {
                 done();
                 return res.json(results);
             });
         } else {
-            console.log(insert);
-            console.log("Some fields were empty, all fields are required.");
-            return res.status(500).json({success: false, data: err,errorObject:insert});
+            console.error("Could not execute query from given object");
+            return res.status(500).json({success: false, data: err,errorObject:req.body});
         }
     });
 });

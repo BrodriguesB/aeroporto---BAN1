@@ -10,27 +10,28 @@ block content
       md-button(ng-click="showAdvanced($event)") Adicionar
 
     md-content.md-padding(layout-xs="column", layout="column")
-      div(flex-xs="80", flex-gt-xs="50", layout="row")
+      md-grid-list(md-cols-gt-md="4", md-cols="3", md-cols-md="8", md-row-height-gt-md="1:1.1", md-row-height="4:3", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
         //- List
-        md-card(ng-repeat="plane in planes")
-          md-card-title
-            md-card-title-text
-              span.md-headline Modelo - {{plane.modelo}}
-          md-card-content
-            md-list
-              md-list-item
-                p Quantidade maxima de passageiros : {{plane.max_passageiros}}
-              md-list-item
-                p Quantidade maxima de carga : {{plane.max_carga}} KG
-              md-list-item
-                p Data da aquisição : {{plane.data_aquisicao | date}}
-              md-list-item
-                p Companhia : {{plane.companhia}}
-          md-card-actions(layout="row", layout-align="end center")
-            md-button
-              md-icon.material-icons.md-ligh.md-avatar-icon(ng-click="") edit
-            md-button
-              md-icon.material-icons.md-ligh.md-avatar-icon(ng-click="deletePlane(plane)") close
+        md-grid-tile(ng-repeat="plane in planes")
+          md-card
+            md-card-title
+              md-card-title-text
+                span.md-headline Modelo - {{plane.modelo}}
+            md-card-content
+              md-list
+                md-list-item
+                  p Quantidade maxima de passageiros : {{plane.max_passageiros}}
+                md-list-item
+                  p Quantidade maxima de carga : {{plane.max_carga}} KG
+                md-list-item
+                  p Data da aquisição : {{plane.data_aquisicao | date}}
+                md-list-item
+                  p Companhia : {{plane.companhia}}
+            md-card-actions(layout="row", layout-align="end center")
+              md-button
+                md-icon.material-icons.md-ligh.md-avatar-icon(ng-click="") edit
+              md-button
+                md-icon.material-icons.md-ligh.md-avatar-icon(ng-click="deletePlane(plane)") close
   script(type="text/ng-template" id="dialog1.tmpl.html")
     md-dialog(layout-padding="",style="min-width:500px;")
       form(ng-cloak)

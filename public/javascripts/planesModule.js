@@ -20,12 +20,12 @@
      */
 
     /*global angular*/
-    angular.module('AirportMainApp',['ngMaterial']);
+    angular.module('AirportMainApp',['ngMaterial','ngMessages']);
 
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('AirportMainApp').controller('indexController', function ($scope, $http,$mdDialog) {
+    angular.module('AirportMainApp').controller('indexController', function ($scope, $http,$mdDialog,$mdToast) {
 
         $scope.currentManagedCard = undefined;
 
@@ -54,14 +54,25 @@
                 }
 
                 $http.post('/api/avioes',converted)
-                    .then(function(response){
+                    .then(function success(response){
                         $scope.planes = response.data;
-                        console.info("Adicionado ",answer.modelo); //TODO:Call toaster.
+                        showSimpleToast("Avião adicionado"); //TODO:Call toaster.
+                    }, function error(){
+                        showSimpleToast("Houve um erro ao adicionar");
                     });
             }, function() {
                 console.log('You cancelled the dialog.');
             });
         };
+
+        function showSimpleToast(message) {
+            $mdToast.show(
+                $mdToast.simple()
+                    .textContent(message)
+                    .position("bottom right" )
+                    .hideDelay(3000)
+            );
+        }
 
         function DialogController($scope, $mdDialog) {
             $scope.hide = function() {
