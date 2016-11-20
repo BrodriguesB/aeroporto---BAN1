@@ -12,6 +12,7 @@
      */
     angular.module('AirportMainApp').controller('indexController', function ($scope, $http,$mdDialog,$mdToast) {
 
+        const apiBaseUrl = '/api/aviao';
         $scope.currentManagedCard = undefined;
 
         $scope.showAdvanced = function(ev,edit) {
@@ -47,7 +48,7 @@
                 }
 
                 if(edit){
-                    $http.post('/api/Avioes', converted)
+                    $http.post(apiBaseUrl, converted)
                         .then(function success(response) {
                             $scope.planes = response.data;
                             showSimpleToast("Avião adicionado"); //TODO:Call toaster.
@@ -56,7 +57,7 @@
                         });
 
                 } else {
-                    $http.post('/api/Avioes', converted)
+                    $http.post(apiBaseUrl, converted)
                         .then(function success(response) {
                             $scope.planes = response.data;
                             showSimpleToast("Avião adicionado"); //TODO:Call toaster.
@@ -96,14 +97,14 @@
 
         //Pega os avioes
         function getPlanes(){
-            $http.get('/api/Avioes').then(function (response) {
+            $http.get(apiBaseUrl).then(function (response) {
                 $scope.planes = response.data;
             });
         }
 
         $scope.deletePlane = function (plane){
             console.debug(plane.registro);
-            $http.delete('/api/Avioes/'+plane.registro)
+            $http.delete(apiBaseUrl+plane.registro)
                 .success(function (response) {
                     $scope.planes = response;
                     console.info("Removed plane.")
