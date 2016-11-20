@@ -5,12 +5,12 @@
      */
 
     /*global angular*/
-    angular.module('AirportMainApp',['ngMaterial','ngMessages']);
+    angular.module('flightModule',['ngMaterial','ngMessages']);
 
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('AirportMainApp').controller('indexController', function ($scope, $http,$mdDialog,$mdToast) {
+    angular.module('flightModule').controller('flightController', function ($scope, $http,$mdDialog,$mdToast) {
 
         $scope.currentManagedCard = undefined;
 
@@ -47,7 +47,7 @@
                 }
 
                 if(edit){
-                    $http.post('/api/Avioes', converted)
+                    $http.post('/api/avioes', converted)
                         .then(function success(response) {
                             $scope.planes = response.data;
                             showSimpleToast("Avião adicionado"); //TODO:Call toaster.
@@ -56,7 +56,7 @@
                         });
 
                 } else {
-                    $http.post('/api/Avioes', converted)
+                    $http.post('/api/avioes', converted)
                         .then(function success(response) {
                             $scope.planes = response.data;
                             showSimpleToast("Avião adicionado"); //TODO:Call toaster.
@@ -96,22 +96,22 @@
 
         //Pega os avioes
         function getPlanes(){
-            $http.get('/api/Avioes').then(function (response) {
+            $http.get('/api/avioes').then(function (response) {
                 $scope.planes = response.data;
             });
         }
 
         $scope.deletePlane = function (plane){
             console.debug(plane.registro);
-            $http.delete('/api/Avioes/'+plane.registro)
+            $http.delete('/api/avioes/'+plane.registro)
                 .success(function (response) {
                     $scope.planes = response;
                     console.info("Removed plane.")
-            });
+                });
         };
 
 
-        getPlanes();
+        //getPlanes();
 
 
 
