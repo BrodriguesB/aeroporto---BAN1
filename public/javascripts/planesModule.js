@@ -12,21 +12,25 @@
      */
     angular.module('AirportMainApp').controller('indexController', function ($scope, $http,$mdDialog,$mdToast) {
 
-        const apiBaseUrl = '/api/aviao';
+        const apiBaseUrl = '/api/modelo_aviao';
         $scope.currentManagedCard = undefined;
 
         $scope.showAdvanced = function(ev,edit) {
             //TODO : maybe filter the date.
             if(edit){
-                edit.data_aquisicao = new Date(edit.data_aquisicao);
+                //Transform to number FIXME: numbers should come as numbers from server.
+                edit.id_modelo_aviao = Number(edit.id_modelo_aviao);
+                edit.num_capacidade_passageiros = Number(edit.num_capacidade_passageiros);
+                edit.qtd_peso = Number(edit.qtd_peso);
+                edit.num_maximo_aeroporto = Number(edit.num_maximo_aeroporto);
                 $scope.currentManagedCard = edit;
             } else {
                 $scope.currentManagedCard = {
-                    modelo:'',
-                    max_passageiros:'',
-                    max_carga:'',
-                    data_aquisicao: + new Date,
-                    companhia:''
+                    id_modelo_aviao: Number(String(+new Date).substr(0,11)),
+                    cod_modelo_aviao: undefined,
+                    num_capacidade_passageiros:undefined,
+                    qtd_peso: undefined,
+                    num_maximo_aeroporto:undefined,
                 }
             }
             $mdDialog.show({
@@ -74,7 +78,7 @@
             $mdToast.show(
                 $mdToast.simple()
                     .textContent(message)
-                    .position("bottom right" )
+                    .position("top right" )
                     .hideDelay(3000)
             );
         }

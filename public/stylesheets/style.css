@@ -29,9 +29,11 @@
 .material-icons.md-48 { font-size: 48px; }
 
 body {
-  padding: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+
 
 a {
   color: #00B7FF;
