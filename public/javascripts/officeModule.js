@@ -5,33 +5,25 @@
      */
 
     /*global angular*/
-    angular.module('AirportMainApp',['ngMaterial','ngMessages']);
+    angular.module('OfficeMainApp',['ngMaterial','ngMessages']);
 
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('AirportMainApp').controller('indexController', function ($scope, $http,$mdDialog,$mdToast) {
+    angular.module('OfficeMainApp').controller('indexController', function ($scope, $http,$mdDialog,$mdToast) {
 
-        const apiBaseUrl = '/api/modelo_aviao';
+        const apiBaseUrl = '/api/cargo';
         $scope.currentManagedCard = undefined;
 
         $scope.showAdvanced = function(ev,edit) {
             //TODO : maybe filter the date.
             if(edit){
-                //Transform to number FIXME: numbers should come as numbers from server.
-                edit.id_modelo_aviao = Number(edit.id_modelo_aviao);
-                edit.num_capacidade_passageiros = Number(edit.num_capacidade_passageiros);
-                edit.qtd_peso = Number(edit.qtd_peso);
-                edit.num_maximo_aeroporto = Number(edit.num_maximo_aeroporto);
                 $scope.currentManagedCard = edit;
             } else {
                 $scope.currentManagedCard = {
-                    id_modelo_aviao: Number(String(+new Date).substr(0,11)),
-                    cod_modelo_aviao: undefined,
-                    num_capacidade_passageiros:undefined,
-                    qtd_peso: undefined,
-                    num_maximo_aeroporto:undefined,
-                }
+                    id_cargo: Number(String(+new Date).substr(0,11)),
+                    den_cargo: undefined,
+                };
             }
             $mdDialog.show({
                 controller: DialogController,
@@ -54,8 +46,8 @@
                 if(edit){
                     $http.post(apiBaseUrl, converted)
                         .then(function success(response) {
-                            $scope.planes = response.data;
-                            showSimpleToast("Avião adicionado"); //TODO:Call toaster.
+                            $scope.offices = response.data;
+                            showSimpleToast("Adicionado");
                         }, function error() {
                             showSimpleToast("Houve um erro ao adicionar");
                         });
@@ -63,8 +55,8 @@
                 } else {
                     $http.post(apiBaseUrl, converted)
                         .then(function success(response) {
-                            $scope.planes = response.data;
-                            showSimpleToast("Avião adicionado"); //TODO:Call toaster.
+                            $scope.offices = response.data;
+                            showSimpleToast("Adicionado");
                         }, function error() {
                             showSimpleToast("Houve um erro ao adicionar");
                         });
@@ -100,23 +92,23 @@
 
 
         //Pega os avioes
-        function getPlanes(){
+        function getAll(){
             $http.get(apiBaseUrl).then(function (response) {
-                $scope.planes = response.data;
+                $scope.offices = response.data;
             });
         }
 
-        $scope.deletePlane = function (plane){
-            console.debug(plane.registro);
-            $http.delete(apiBaseUrl+plane.registro)
+        $scope.delete = function (item){
+            console.debug(item.num_matricula);
+            $http.delete(apiBaseUrl+item.num_matricula)
                 .success(function (response) {
-                    $scope.planes = response;
-                    console.info("Removed plane.")
-            });
+                    $scope.offices = response;
+                    showSimpleToast("Cargo removido");
+                });
         };
 
 
-        getPlanes();
+        getAll();
 
 
 

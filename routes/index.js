@@ -21,11 +21,16 @@ router.get('/flights', function (req, res, next) {
     res.render('flights');
 });
 
-function generateInsertQueryWith(obj,bd){
-    var generated = getKeysAndArrayFor(obj);
-    generated.query = `INSERT INTO public."${bd}"(${generated.columns}) VALUES (${generated.counters})` ;
-    return generated;
-}
+/* GET home page. */
+router.get('/funcionario', function (req, res, next) {
+    res.render('employee');
+});
+
+/* GET home page. */
+router.get('/cargo', function (req, res, next) {
+    res.render('office');
+});
+
 
 
 /**
@@ -80,7 +85,6 @@ class QueryBuilder {
 
     setClient(client){
         this.client = client;
-        console.log(this.client);
     }
 
     setTable(table){
@@ -173,6 +177,7 @@ router.post('/api/:table', function (req, res, next) {
         //execute query.
         let create = generalQB.exec(generalQB.CREATE(),generalQB.helperObject.data);
 
+        console.log(generalQB.CREATE());
         //if query succeeded
         if(create){
             returnAllFromTable(req,res);
@@ -238,11 +243,12 @@ function returnAllFromTable(req, res) {
  * DELETE
  * delete a registry from a table from the give id.
  */
-router.delete('/api/:table/:id', function(req, res, next) {
+router.delete('/api/:table/:column/:id', function(req, res, next) {
     const results = [];
     // Grab data from the URL parameters
     const id = req.params.id;
     const table = req.params.table;
+    const column = req.params.column;
     // Get a Postgres client from the connection pool
     pg.connect(connectionDBStr, function(err, client, done) {
         // Handle connection errors
@@ -253,8 +259,8 @@ router.delete('/api/:table/:id', function(req, res, next) {
         }
         // SQL Query > Delete Data
         console.log(id);
-        client.query(`DELETE FROM public."${table}" WHERE registro=(${id})`);
-        returnAllFromTable(req,res)
+        let query = client.query(`DELETE FROM public."${table}" WHERE ${column}=(${id})`);
+        query.on("end",()=>{returnAllFromTable(req,res);})
     });
 });
 
