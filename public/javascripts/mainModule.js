@@ -51,7 +51,8 @@
 
 
         function DialogController($scope, $mdDialog,item) {
-            $scope.item = item;
+            tryParseNtoN(item);
+            $scope.item = Object.assign({},item); //Prevent two way data bind.
             $scope.hide = function() {
                 $mdDialog.hide();
             };
@@ -67,9 +68,6 @@
                 $mdDialog.hide(answer);
             };
 
-            $scope.offices = null;
-            $scope.selectedOffice =  null;
-
             $scope.getFrom = function (url,keyForScope){
                 $http.get(url).then(function (response) {
                     $scope[keyForScope] = response.data;
@@ -78,9 +76,23 @@
 
         }
 
+
+        //Dunno if it works..but should (not covering floats, im too lazy)
+        function tryParseNtoN(obj){
+            Object.keys(obj).map((x)=>{
+                try{
+                    obj[x] = isNaN(Number(obj[x])) ? obj[x] :Number(obj[x]);
+                } catch (e){
+                }
+                return obj[x];
+            })
+        }
+
+
         //FIXME: move to global scope.
         window.DialogController = DialogController;
         window.showSimpleToast = showSimpleToast;
+        window.tryParseNtoN = showSimpleToast;
 
 
 

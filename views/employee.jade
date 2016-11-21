@@ -43,13 +43,13 @@ script(type="text/ng-template" id="dialog1.tmpl.html")
         h3(data-layout-gt-xs="row")
           md-input-container.md-block(flex="90")
             label(for="num_matricula") Matrícula
-            input#num_matricula.md-input(data-ng-model="item.num_matricula",type="number" aria-invalid="false",name="num_matricula",data-md-autofocus)
+            input#num_matricula.md-input(data-ng-model="item.num_matricula",type="number" aria-invalid="false",name="num_matricula",required, disabled)
           md-button.md-icon-button(aria-label="Fechar",ng-click="cancel()" flex=33,style="top: -15px;")
             md-icon.material-icons close
       md-dialog-content(layout-padding)
         md-input-container.md-block(flex-gt-sm)
           label(for="nom_funcionario") Nome
-          input#nom_funcionario.md-input(data-ng-model="item.nom_funcionario", aria-invalid="true",name="nom_funcionario" ,required)
+          input#nom_funcionario.md-input(data-ng-model="item.nom_funcionario", aria-invalid="true",name="nom_funcionario" ,required,data-md-autofocus)
 
         md-input-container.md-block(flex-gt-sm)
           label(for="den_endereco") Endereço
@@ -64,7 +64,7 @@ script(type="text/ng-template" id="dialog1.tmpl.html")
           input#val_salario.md-input(data-ng-model="item.val_salario", aria-invalid="true",name="val_salario", type="number" , step="100", required)
 
         md-input-container.md-block(flex-gt-sm)
-          md-select(placeholder="Cargo", ng-model="item.id_cargo", md-on-open="getFrom('api/cargo','offices')", style="min-width: 200px;" ,required)
+          md-select.md-no-underline(placeholder="Cargo", ng-model="item.id_cargo", md-on-open="getFrom('api/cargo','offices')", style="min-width: 200px;" ,required)
             md-option(ng-value="office.id_cargo",ng-repeat="office in offices") {{office.den_cargo}}
 
         md-input-container.md-block(flex-gt-sm)
@@ -72,8 +72,8 @@ script(type="text/ng-template" id="dialog1.tmpl.html")
           input#num_membro_sindicato(data-ng-model="item.num_membro_sindicato", aria-invalid="true",name="num_membro_sindicato" ,type="number" ,required)
 
         md-input-container.md-block(flex-gt-sm)
-          label(for="id_sindicato") Id do sindicato
-          input#id_sindicato(data-ng-model="item.id_sindicato", aria-invalid="true",name="id_sindicato" , type="number" ,required)
+          md-select.md-no-underline(placeholder="Sindicato", ng-model="item.id_sindicato", md-on-open="getFrom('api/sindicato','unions')", style="min-width: 200px;",required)
+            md-option(ng-value="union.id_sindicato",ng-repeat="union in unions") {{union.den_sindicato}}
 
       md-dialog-actions(layout="row", layout-align="end center")
         md-button(type="submit" ng-click="answer(item)")

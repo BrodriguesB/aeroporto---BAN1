@@ -8,20 +8,20 @@ md-content
     md-content.md-padding(layout-xs="column", layout="column")
         md-grid-list(md-cols-gt-md="6", md-cols="3", md-cols-md="3", md-row-height-gt-md="1:1.1", md-row-height="1:1.1", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
             //- List
-            md-grid-tile(ng-repeat="office in offices")
+            md-grid-tile(ng-repeat="union in unions")
                 md-card
                     md-card-title
                         md-card-title-text
-                            span.md-headline {{office.den_sindicato}}
+                            span.md-headline {{union.den_sindicato}}
                     md-card-content
                         md-list
                             md-list-item
-                                p Id sindicato : {{office.id_sindicato}}
+                                p Id sindicato : {{union.id_sindicato}}
                             md-list-item
                     md-card-actions(layout="row", layout-align="end center")
-                        md-button(ng-click="showAdvanced($event,office)")
+                        md-button(ng-click="showAdvanced($event,union)")
                             md-icon.material-icons.md-ligh.md-avatar-icon edit
-                        md-button(ng-click="delete(office)")
+                        md-button(ng-click="delete(union)")
                             md-icon.material-icons.md-ligh.md-avatar-icon close
 script(type="text/ng-template" id="dialog1.tmpl.html")
     md-dialog(layout-padding="",style="min-width:500px;")

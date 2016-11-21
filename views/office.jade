@@ -39,7 +39,7 @@ script(type="text/ng-template" id="dialog1.tmpl.html")
       md-dialog-content(layout-padding)
         md-input-container.md-block(flex-gt-xs)
           label(for="den_cargo") Nome do cargo
-          input#den_cargo.md-input(ng-model="item.den_cargo", aria-invalid="false",name="den_cargo",md-autofocus)
+          input#den_cargo.md-input(ng-model="item.den_cargo", aria-invalid="false",name="den_cargo",md-autofocus,required)
 
     md-dialog-actions(layout="row", layout-align="end center")
       md-button(type="clear")

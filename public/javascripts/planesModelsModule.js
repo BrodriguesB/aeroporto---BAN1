@@ -12,7 +12,7 @@
      */
     angular.module('PlanesModelsModule').controller('planesModelsController', function ($scope, $http,$mdDialog,$mdToast) {
 
-        const apiBaseUrl = '/api/modelo_aviao';
+        const apiBaseUrl = '/api/modelo_aviao/';
         $scope.currentManagedCard = undefined;
 
         $scope.showAdvanced = function(ev,edit) {
@@ -82,11 +82,11 @@
         }
 
         $scope.deletePlane = function (plane){
-            console.debug(plane.registro);
-            $http.delete(apiBaseUrl+plane.registro)
+            console.debug(plane.id_modelo_aviao);
+            $http.delete(apiBaseUrl+'id_modelo_aviao/'+plane.id_modelo_aviao)
                 .success(function (response) {
                     $scope.planes = response;
-                    console.info("Removed plane.")
+                    showSimpleToast("Removed plane.")
             });
         };
 

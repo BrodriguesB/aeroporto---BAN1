@@ -119,8 +119,8 @@ class QueryBuilder {
      * Create query.
      * @return {string}
      */
-    UPDATE(colsObj) {
-        return `INSERT INTO public."${this.table}"(${this.helperObject.columns}) VALUES (${this.helperObject.counters})`;
+    UPDATE(id) {
+        return `UPDATE public."${this.table}" SET (${Object.keys(this.baseObject).map((x)=>{return x+'='+a[x]}).join(', ')}) VALUES (${this.helperObject.counters})`;
     }
     /**
      * Read query.

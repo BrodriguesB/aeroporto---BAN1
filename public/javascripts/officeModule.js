@@ -67,22 +67,6 @@
             });
         };
 
-        function DialogController($scope, $mdDialog,item) {
-            $scope.item = item;
-            $scope.hide = function() {
-                $mdDialog.hide();
-            };
-
-            $scope.cancel = function() {
-                $mdDialog.cancel();
-            };
-
-            $scope.answer = function(answer) {
-                $mdDialog.hide(answer);
-            };
-        }
-
-
         //Pega os avioes
         function getAll(){
             $http.get(apiBaseUrl).then(function (response) {
@@ -92,7 +76,7 @@
 
         $scope.delete = function (item){
             console.debug(item.num_matricula);
-            $http.delete(apiBaseUrl+item.num_matricula)
+            $http.delete(apiBaseUrl+'num_matricula/'+item.num_matricula)
                 .success(function (response) {
                     $scope.offices = response;
                     showSimpleToast("Cargo removido");
