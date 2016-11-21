@@ -72,40 +72,6 @@
             });
         };
 
-        function showSimpleToast(message) {
-            $mdToast.show(
-                $mdToast.simple()
-                    .textContent(message)
-                    .position("bottom right" )
-                    .hideDelay(3000)
-            );
-        }
-
-        function DialogController($scope, $mdDialog,item) {
-            $scope.item = item;
-            $scope.hide = function() {
-                $mdDialog.hide();
-            };
-
-            $scope.cancel = function() {
-                $mdDialog.cancel();
-            };
-
-            $scope.answer = function(answer) {
-                $mdDialog.hide(answer);
-            };
-
-            $scope.offices = null;
-            $scope.selectedOffice =  null;
-
-            $scope.getFrom = function (url,keyForScope){
-                $http.get(url).then(function (response) {
-                    $scope[keyForScope] = response.data;
-                });
-            };
-
-        }
-
 
         //Pega os avioes
         function getAll(){

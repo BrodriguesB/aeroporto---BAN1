@@ -16,23 +16,29 @@ router.get('/', function (req, res, next) {
     res.render('layout', {title: 'Express'});
 });
 
+/* GET index page. */
 router.get('/index', function (req, res, next) {
     res.render('index', {title: 'Express'});
 });
 
-/* GET home page. */
-router.get('/voos', function (req, res, next) {
-    res.render('flights');
+/* GET flights page. */
+router.get('/sindicato', function (req, res, next) {
+    res.render('union');
 });
 
-/* GET home page. */
+/* GET employee page. */
 router.get('/funcionario', function (req, res, next) {
     res.render('employee');
 });
 
-/* GET home page. */
+/* GET office page. */
 router.get('/cargo', function (req, res, next) {
     res.render('office');
+});
+
+/* GET office page. */
+router.get('/modelos', function (req, res, next) {
+    res.render('planesModel');
 });
 
 

@@ -1,0 +1,60 @@
+md-content
+    h1 Aviões
+    <!-- Button trigger modal -->
+    div
+        md-button(ng-click="showAdvanced($event)") Adicionar
+
+    md-content.md-padding(layout-xs="column", layout="column")
+        md-grid-list(md-cols-gt-md="4", md-cols="3", md-cols-md="3", md-row-height-gt-md="1:1.3", md-row-height="1:1.3", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
+            //- List
+            md-grid-tile(ng-repeat="plane in planes")
+                md-card
+                    md-card-title
+                        md-card-title-text
+                            span.md-headline Modelo - {{plane.cod_modelo_aviao}}
+                    md-card-content
+                        md-list
+                            md-list-item
+                                p Capacidade de passageiros : {{plane.num_capacidade_passageiros}}
+                            md-list-item
+                                p Maximo de peso suportado : {{plane.qtd_peso}} + KG
+                            md-list-item
+                                p Num : {{plane.num_maximo_aeroporto}}
+                            md-list-item
+                    md-card-actions(layout="row", layout-align="end center")
+                        md-button(ng-click="showAdvanced($event,plane)")
+                            md-icon.material-icons.md-ligh.md-avatar-icon edit
+                        md-button(ng-click="deletePlane(plane)")
+                            md-icon.material-icons.md-ligh.md-avatar-icon close
+
+script(type="text/ng-template" id="dialog1.tmpl.html")
+    md-dialog(layout-padding="",style="min-width:500px;")
+        form(ng-cloak)
+            //- Edit | Add
+            md-title
+                h3(layout-gt-xs="row")
+                    md-input-container.md-block(flex-gt-xs)
+                        label(for="cod_modelo_aviao") Modelo
+                        input#cod_modelo_aviao.md-input(ng-model="item.cod_modelo_aviao", aria-invalid="false",name="cod_modelo_aviao",md-autofocus)
+                    md-input-container
+                        md-button.md-icon-button.md-primary(aria-label="Profile",ng-click="cancel()",style="display:inline-block;top: -35px;")
+                            md-icon.material-icons close
+
+            md-dialog-content(layout-padding)
+                md-input-container.md-block(flex-gt-sm)
+                    label(for="num_capacidade_passageiros") Quantidade maxima de passageiros
+                    input#num_capacidade_passageiros.md-input(ng-model="item.num_capacidade_passageiros", aria-invalid="true",name="num_capacidade_passageiros", type="number")
+
+                md-input-container.md-block(flex-gt-sm)
+                    label(for="qtd_peso") Quantidade maxima de carga (KG)
+                    input#qtd_peso.md-input(ng-model="item.qtd_peso", aria-invalid="true",name="qtd_peso",step="100", type="number")
+
+                md-input-container.md-block(flex-gt-sm)
+                    label(for="num_maximo_aeroporto") Num max aeroporto
+                    input#num_maximo_aeroporto(ng-model="item.num_maximo_aeroporto", aria-invalid="true",name="num_maximo_aeroporto")
+
+            md-dialog-actions(layout="row", layout-align="end center")
+                md-button(type="clear")
+                    md-icon.material-icons.md-ligh.md-avatar-icon refresh
+                md-button(ng-click="answer(item)")
+                    md-icon.material-icons.md-ligh.md-avatar-icon done

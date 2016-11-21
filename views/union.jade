@@ -1,0 +1,48 @@
+md-content
+    h1 Sindicatos
+
+    <!-- Button trigger modal -->
+    div
+        md-button(ng-click="showAdvanced($event)") Adicionar
+
+    md-content.md-padding(layout-xs="column", layout="column")
+        md-grid-list(md-cols-gt-md="6", md-cols="3", md-cols-md="3", md-row-height-gt-md="1:1.1", md-row-height="1:1.1", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
+            //- List
+            md-grid-tile(ng-repeat="office in offices")
+                md-card
+                    md-card-title
+                        md-card-title-text
+                            span.md-headline {{office.den_sindicato}}
+                    md-card-content
+                        md-list
+                            md-list-item
+                                p Id sindicato : {{office.id_sindicato}}
+                            md-list-item
+                    md-card-actions(layout="row", layout-align="end center")
+                        md-button(ng-click="showAdvanced($event,office)")
+                            md-icon.material-icons.md-ligh.md-avatar-icon edit
+                        md-button(ng-click="delete(office)")
+                            md-icon.material-icons.md-ligh.md-avatar-icon close
+script(type="text/ng-template" id="dialog1.tmpl.html")
+    md-dialog(layout-padding="",style="min-width:500px;")
+        form(ng-cloak)
+            //- Edit | Add
+            md-title
+                h4(layout-gt-xs="row")
+                    md-input-container.md-block(flex-gt-sm)
+                        label(for="id_sindicato") Id
+                        input#id_sindicato.md-input(ng-model="item.id_sindicato", aria-invalid="true",name="id_sindicato",type="number",disabled)
+                    md-input-container
+                        md-button.md-icon-button.md-primary(aria-label="Profile",ng-click="cancel()",style="display:inline-block;top: -35px;")
+                            md-icon.material-icons close
+
+            md-dialog-content(layout-padding)
+                md-input-container.md-block(flex-gt-xs)
+                    label(for="den_sindicato") Nome do sindicato
+                    input#den_sindicato.md-input(ng-model="item.den_sindicato", aria-invalid="false",name="den_sindicato",md-autofocus)
+
+        md-dialog-actions(layout="row", layout-align="end center")
+            md-button(type="clear")
+                md-icon.material-icons.md-ligh.md-avatar-icon refresh
+            md-button(ng-click="answer(item)")
+                md-icon.material-icons.md-ligh.md-avatar-icon done

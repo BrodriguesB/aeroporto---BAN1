@@ -74,31 +74,6 @@
             });
         };
 
-        function showSimpleToast(message) {
-            $mdToast.show(
-                $mdToast.simple()
-                    .textContent(message)
-                    .position("bottom right" )
-                    .hideDelay(3000)
-            );
-        }
-
-        function DialogController($scope, $mdDialog,item) {
-            $scope.item = item;
-            $scope.hide = function() {
-                $mdDialog.hide();
-            };
-
-            $scope.cancel = function() {
-                $mdDialog.cancel();
-            };
-
-            $scope.answer = function(answer) {
-                $mdDialog.hide(answer);
-            };
-        }
-
-
         //Pega os avioes
         function getPlanes(){
             $http.get(apiBaseUrl).then(function (response) {
@@ -115,10 +90,7 @@
             });
         };
 
-
         getPlanes();
-
-
 
     });
 })();

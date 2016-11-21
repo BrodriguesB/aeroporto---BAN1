@@ -5,12 +5,12 @@
      */
 
     /*global angular*/
-    angular.module('FlightsModule',['ngMaterial','ngMessages']);
+    angular.module('UnionModule',['ngMaterial','ngMessages']);
 
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('FlightsModule').controller('flightsController', function ($scope, $http,$mdDialog,$mdToast) {
+    angular.module('UnionModule').controller('unionController', function ($scope, $http,$mdDialog,$mdToast) {
 
     });
 })();
