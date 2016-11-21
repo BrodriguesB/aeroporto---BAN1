@@ -5,12 +5,12 @@
      */
 
     /*global angular*/
-    angular.module('OfficeMainApp',['ngMaterial','ngMessages']);
+    angular.module('OfficeModule',['ngMaterial','ngMessages']);
 
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('OfficeMainApp').controller('indexController', function ($scope, $http,$mdDialog,$mdToast) {
+    angular.module('OfficeModule').controller('officeController', function ($scope, $http, $mdDialog, $mdToast) {
 
         const apiBaseUrl = '/api/cargo';
         $scope.currentManagedCard = undefined;
@@ -18,6 +18,7 @@
         $scope.showAdvanced = function(ev,edit) {
             //TODO : maybe filter the date.
             if(edit){
+                edit.id_cargo = Number(edit.id_cargo);
                 $scope.currentManagedCard = edit;
             } else {
                 $scope.currentManagedCard = {
@@ -66,15 +67,6 @@
             });
         };
 
-        function showSimpleToast(message) {
-            $mdToast.show(
-                $mdToast.simple()
-                    .textContent(message)
-                    .position("bottom right" )
-                    .hideDelay(3000)
-            );
-        }
-
         function DialogController($scope, $mdDialog,item) {
             $scope.item = item;
             $scope.hide = function() {
@@ -109,8 +101,6 @@
 
 
         getAll();
-
-
 
     });
 })();

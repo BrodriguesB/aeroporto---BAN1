@@ -13,11 +13,15 @@ const connectionDBStr = 'postgres://' + userName + ':' + password + '@' + host +
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    res.render('layout', {title: 'Express'});
+});
+
+router.get('/index', function (req, res, next) {
     res.render('index', {title: 'Express'});
 });
 
 /* GET home page. */
-router.get('/flights', function (req, res, next) {
+router.get('/voos', function (req, res, next) {
     res.render('flights');
 });
 
@@ -46,7 +50,6 @@ function HelperModel(columns,counters,data){
 }
 
 class QueryBuilder {
-
 
     /***
      * Build and return helper object

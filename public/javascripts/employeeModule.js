@@ -5,12 +5,12 @@
      */
 
     /*global angular*/
-    angular.module('EmployeeMainApp',['ngMaterial','ngMessages']);
+    angular.module('EmployeeModule',['ngMaterial','ngMessages']);
 
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('EmployeeMainApp').controller('indexController', function ($scope, $http,$mdDialog,$mdToast) {
+    angular.module('EmployeeModule').controller('employeeController', function ($scope, $http,$mdDialog,$mdToast) {
 
         const apiBaseUrl = '/api/funcionario/';
         $scope.currentManagedCard = undefined;

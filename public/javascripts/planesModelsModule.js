@@ -5,12 +5,12 @@
      */
 
     /*global angular*/
-    angular.module('AirportMainApp',['ngMaterial','ngMessages']);
+    angular.module('PlanesModelsModule',['ngMaterial','ngMessages']);
 
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('AirportMainApp').controller('indexController', function ($scope, $http,$mdDialog,$mdToast) {
+    angular.module('PlanesModelsModule').controller('planesModelsController', function ($scope, $http,$mdDialog,$mdToast) {
 
         const apiBaseUrl = '/api/modelo_aviao';
         $scope.currentManagedCard = undefined;
