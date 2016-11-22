@@ -123,9 +123,9 @@ class QueryBuilder {
         let base = Object.assign({},object);
         let set = Object.keys(base).map((x)=>{
                         //if its the id key we ignore.
-                        return x+'='+base[x]
+                        return `${x}='${base[x]}'`;
                     }).join(', ');
-        return `UPDATE public."${this.table}" SET (${set}) WHERE ${id_column}=(${id})`;
+        return `UPDATE public."${this.table}" SET ${set} WHERE ${id_column}=${id}`;
     }
     /**
      * Read query.
@@ -280,10 +280,9 @@ router.delete('/api/:table/:column/:id', function(req, res, next) {
     });
 });
 
-router.put('/api/v1/:table/:id_column/:id', (req, res, next) => {
-    const results = [];
+router.put('/api/:table/:id_column/:id', (req, res, next) => {
 
-    pg.connect(connectionString, (err, client, done) => {
+    pg.connect(connectionDBStr, (err, client, done) => {
         // Handle connection errors
         if(err) {
             done();
@@ -294,11 +293,12 @@ router.put('/api/v1/:table/:id_column/:id', (req, res, next) => {
         generalQB.setClient(client);
         generalQB.setTable(req.params.table);
         console.log(generalQB.UPDATE(req.params.id,req.params.id_column,req.body));
-        return;
-        //var update = generalQB.exec();
+        let update = generalQB.exec(generalQB.UPDATE(req.params.id,req.params.id_column,req.body));
 
         if(update){
-            returnAllFromTable(req,res);
+            update.on('end',function () {
+                returnAllFromTable(req,res);
+            });
         } else {
             console.error("Could not execute query from given object");
             return res.status(500).json({success: false, data: err,errorObject:req.body});

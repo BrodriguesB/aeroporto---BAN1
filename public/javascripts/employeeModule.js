@@ -54,7 +54,6 @@
                     console.log(answer);
                     //If there's no diff.
                     if(!Object.keys(answer).length) return;
-                    return;
                 }
                 let converted = angular.toJson(answer);
 
