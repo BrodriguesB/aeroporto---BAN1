@@ -10,7 +10,7 @@
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('EmployeeModule').controller('employeeController', function ($scope, $http,$mdDialog,$mdToast) {
+    angular.module('EmployeeModule').controller('employeeController', function ($scope, $http,$mdDialog) {
 
         const apiBaseUrl = '/api/funcionario/';
         $scope.currentManagedCard = undefined;

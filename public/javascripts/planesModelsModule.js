@@ -10,7 +10,7 @@
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('PlanesModelsModule').controller('planesModelsController', function ($scope, $http,$mdDialog,$mdToast) {
+    angular.module('PlanesModelsModule').controller('planesModelsController', function ($scope, $http,$mdDialog) {
 
         const apiBaseUrl = '/api/modelo_aviao/';
         $scope.currentManagedCard = undefined;
@@ -38,7 +38,8 @@
                 clickOutsideToClose:true,
                 fullscreen: false, // Only for -xs, -sm breakpoints.
                 locals: {
-                    item: $scope.currentManagedCard
+                    item: $scope.currentManagedCard,
+                    requestItems: false
                 },
             }).then(function(answer) {
                 let id= answer.id_modelo_aviao;

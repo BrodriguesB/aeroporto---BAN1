@@ -33,7 +33,8 @@
                 clickOutsideToClose:true,
                 fullscreen: false, // Only for -xs, -sm breakpoints.
                 locals: {
-                    item: $scope.currentManagedCard
+                    item: $scope.currentManagedCard,
+                    requestItems: false
                 },
             }).then(function(answer) {
                 let id = answer.id_sindicato;
