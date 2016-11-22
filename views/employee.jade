@@ -6,10 +6,10 @@ md-content
     md-button(ng-click="showAdvanced($event)") Adicionar
 
   md-content.md-padding(layout-xs="column", layout="column")
-    md-grid-list(md-cols-gt-md="3", md-cols="3", md-cols-md="1", md-row-height-gt-md="1:1.2", md-row-height="1:1", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
+    md-grid-list(md-cols="1", md-cols-sm="2", md-cols-md="3", md-cols-gt-md="4", md-row-height-gt-md="4:6", md-row-height="4:3", md-gutter="8px" md-gutter-gt-sm="4px")
       //- List
       md-grid-tile(ng-repeat="employee in employees")
-        md-card
+        md-card(flex)
           md-card-title
             md-card-title-text
               span.md-headline Matricula - {{employee.num_matricula}}
