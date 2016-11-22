@@ -50,9 +50,11 @@
         }
 
 
-        function DialogController($scope, $mdDialog,item) {
+        function DialogController($scope, $mdDialog, item, requestItems) {
             tryParseNtoN(item);
             $scope.item = Object.assign({},item); //Prevent two way data bind.
+
+
             $scope.hide = function() {
                 $mdDialog.hide();
             };
@@ -62,9 +64,11 @@
             };
 
             $scope.answer = function(answer) {
-                if($("form").hasClass("ng-invalid")){
+                if(!$scope.form.$valid){
                     return;
                 }
+
+                tryParseNtoN(answer);
                 $mdDialog.hide(answer);
             };
 
@@ -73,6 +77,15 @@
                     $scope[keyForScope] = response.data;
                 });
             };
+
+            //pre requests from selects
+            if(requestItems){
+                if(requestItems instanceof Array) {
+                    requestItems.forEach((args) => {
+                        $scope.getFrom.apply(this,args);
+                    })
+                }
+            }
 
         }
 
@@ -89,10 +102,27 @@
         }
 
 
+        /**Comparisons on only one level deep, return the diffs on obj one.*/
+        function getDiff(objOne,objTwo){
+            let diff = {};
+            Object.keys(objOne).map((x)=>{
+                if(objOne[x]!=objTwo[x]){
+                    diff[x] = objOne[x];
+                }
+            });
+            return diff;
+        }
+
+        function getDateInIdForm() {
+            return Number(String(+new Date).substr(2,13));
+        }
+
         //FIXME: move to global scope.
+        window.getDiff = getDiff;
+        window.getDateInIdForm = getDateInIdForm;
         window.DialogController = DialogController;
         window.showSimpleToast = showSimpleToast;
-        window.tryParseNtoN = showSimpleToast;
+        window.tryParseNtoN = tryParseNtoN;
 
 
 

@@ -17,7 +17,7 @@
         $scope.showAdvanced = function(ev,edit) {
             //TODO : maybe filter the date.
             if(edit){
-                edit.id_sindicato = Number(edit.id_sindicato);
+                tryParseNtoN(edit); //make numbers be numbers
                 $scope.currentManagedCard = edit;
             } else {
                 $scope.currentManagedCard = {
@@ -36,6 +36,14 @@
                     item: $scope.currentManagedCard
                 },
             }).then(function(answer) {
+                let id = answer.id_sindicato;
+                if(edit) {
+                    answer = getDiff(answer, edit);
+                    console.log(answer);
+                    //If there's no diff.
+                    if(!Object.keys(answer).length) return;
+                    return;
+                }
                 let converted = angular.toJson(answer);
 
                 if (!converted || converted.indexOf('undefined')!=-1){
@@ -44,12 +52,15 @@
                 }
 
                 if(edit){
-                    $http.post(apiBaseUrl, converted)
+
+
+
+                    $http.put(apiBaseUrl+"id_sindicato/"+id, converted)
                         .then(function success(response) {
                             $scope.unions = response.data;
-                            showSimpleToast("Adicionado");
+                            showSimpleToast("Alterado");
                         }, function error() {
-                            showSimpleToast("Houve um erro ao adicionar");
+                            showSimpleToast("Houve um erro ao alterar");
                         });
 
                 } else {

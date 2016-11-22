@@ -119,8 +119,13 @@ class QueryBuilder {
      * Create query.
      * @return {string}
      */
-    UPDATE(id) {
-        return `UPDATE public."${this.table}" SET (${Object.keys(this.baseObject).map((x)=>{return x+'='+a[x]}).join(', ')}) VALUES (${this.helperObject.counters})`;
+    UPDATE(id,id_column,object) {
+        let base = Object.assign({},object);
+        let set = Object.keys(base).map((x)=>{
+                        //if its the id key we ignore.
+                        return x+'='+base[x]
+                    }).join(', ');
+        return `UPDATE public."${this.table}" SET (${set}) WHERE ${id_column}=(${id})`;
     }
     /**
      * Read query.
@@ -201,8 +206,6 @@ router.post('/api/:table', function (req, res, next) {
 //READ
 router.get('/api/:table', returnAllFromTable);
 
-
-
 /**
  * READ
  * get all columns from given table
@@ -270,6 +273,32 @@ router.delete('/api/:table/:column/:id', function(req, res, next) {
         console.log(id);
         let query = client.query(`DELETE FROM public."${table}" WHERE ${column}=(${id})`);
         query.on("end",()=>{returnAllFromTable(req,res);})
+    });
+});
+
+router.put('/api/v1/:table/:id_column/:id', (req, res, next) => {
+    const results = [];
+
+    pg.connect(connectionString, (err, client, done) => {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+
+        generalQB.setClient(client);
+        generalQB.setTable(req.params.table);
+        console.log(generalQB.UPDATE(req.params.id,req.params.id_column,req.body));
+        return;
+        //var update = generalQB.exec();
+
+        if(update){
+            returnAllFromTable(req,res);
+        } else {
+            console.error("Could not execute query from given object");
+            return res.status(500).json({success: false, data: err,errorObject:req.body});
+        }
     });
 });
 

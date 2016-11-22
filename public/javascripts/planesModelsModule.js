@@ -19,14 +19,11 @@
             //TODO : maybe filter the date.
             if(edit){
                 //Transform to number FIXME: numbers should come as numbers from server.
-                edit.id_modelo_aviao = Number(edit.id_modelo_aviao);
-                edit.num_capacidade_passageiros = Number(edit.num_capacidade_passageiros);
-                edit.qtd_peso = Number(edit.qtd_peso);
-                edit.num_maximo_aeroporto = Number(edit.num_maximo_aeroporto);
+                tryParseNtoN(edit);
                 $scope.currentManagedCard = edit;
             } else {
                 $scope.currentManagedCard = {
-                    id_modelo_aviao: Number(String(+new Date).substr(0,11)),
+                    id_modelo_aviao: getDateInIdForm(),
                     cod_modelo_aviao: undefined,
                     num_capacidade_passageiros:undefined,
                     qtd_peso: undefined,
@@ -44,6 +41,14 @@
                     item: $scope.currentManagedCard
                 },
             }).then(function(answer) {
+                let id= answer.id_modelo_aviao;
+                if(edit) {
+                    answer = getDiff(answer, edit);
+                    console.log(answer);
+                    //If there's no diff.
+                    if(!Object.keys(answer).length) return;
+                    return;
+                }
                 let converted = angular.toJson(answer);
 
                 if (!converted || converted.indexOf('undefined')!=-1){
@@ -52,12 +57,12 @@
                 }
 
                 if(edit){
-                    $http.post(apiBaseUrl, converted)
+                    $http.put(apiBaseUrl+"id_modelo_aviao/"+id, converted)
                         .then(function success(response) {
                             $scope.planes = response.data;
-                            showSimpleToast("Avião adicionado"); //TODO:Call toaster.
+                            showSimpleToast("Alterado"); //TODO:Call toaster.
                         }, function error() {
-                            showSimpleToast("Houve um erro ao adicionar");
+                            showSimpleToast("Houve um erro ao alterar");
                         });
 
                 } else {

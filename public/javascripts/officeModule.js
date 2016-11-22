@@ -12,17 +12,17 @@
      */
     angular.module('OfficeModule').controller('officeController', function ($scope, $http, $mdDialog, $mdToast) {
 
-        const apiBaseUrl = '/api/cargo';
+        const apiBaseUrl = '/api/cargo/';
         $scope.currentManagedCard = undefined;
 
         $scope.showAdvanced = function(ev,edit) {
             //TODO : maybe filter the date.
             if(edit){
-                edit.id_cargo = Number(edit.id_cargo);
+                tryParseNtoN(edit);
                 $scope.currentManagedCard = edit;
             } else {
                 $scope.currentManagedCard = {
-                    id_cargo: Number(String(+new Date).substr(0,11)),
+                    id_cargo: getDateInIdForm(),
                     den_cargo: undefined,
                 };
             }
@@ -37,6 +37,14 @@
                     item: $scope.currentManagedCard
                 },
             }).then(function(answer) {
+                let id= answer.id_cargo;
+                if(edit) {
+                    answer = getDiff(answer, edit);
+                    console.log(answer);
+                    //If there's no diff.
+                    if(!Object.keys(answer).length) return;
+                    return;
+                }
                 let converted = angular.toJson(answer);
 
                 if (!converted || converted.indexOf('undefined')!=-1){
@@ -45,12 +53,12 @@
                 }
 
                 if(edit){
-                    $http.post(apiBaseUrl, converted)
+                    $http.put(apiBaseUrl+"id_cargo/"+id, converted)
                         .then(function success(response) {
                             $scope.offices = response.data;
-                            showSimpleToast("Adicionado");
+                            showSimpleToast("Alterado");
                         }, function error() {
-                            showSimpleToast("Houve um erro ao adicionar");
+                            showSimpleToast("Houve um erro ao alterar");
                         });
 
                 } else {

@@ -37,7 +37,7 @@ md-content
               md-icon.material-icons.md-ligh.md-avatar-icon close
 script(type="text/ng-template" id="dialog1.tmpl.html")
   md-dialog(layout-padding="",style="min-width:500px;")
-    form(data-ng-cloak)
+    form(data-ng-cloak,name="form")
       //- Edit | Add
       md-title
         h3(data-layout-gt-xs="row")
@@ -64,16 +64,19 @@ script(type="text/ng-template" id="dialog1.tmpl.html")
           input#val_salario.md-input(data-ng-model="item.val_salario", aria-invalid="true",name="val_salario", type="number" , step="100", required)
 
         md-input-container.md-block(flex-gt-sm)
-          md-select.md-no-underline(placeholder="Cargo", ng-model="item.id_cargo", md-on-open="getFrom('api/cargo','offices')", style="min-width: 200px;" ,required)
-            md-option(ng-value="office.id_cargo",ng-repeat="office in offices") {{office.den_cargo}}
+          label Cargo
+          md-select.md-no-underline(ng-value="item.id_cargo", ng-model="item.id_cargo", style="min-width: 200px;" ,ng-required)
+            md-option(ng-value="office.id_cargo",ng-repeat="office in offices" ) {{office.den_cargo}}
 
         md-input-container.md-block(flex-gt-sm)
           label(for="num_membro_sindicato") Num Membro sindicato
           input#num_membro_sindicato(data-ng-model="item.num_membro_sindicato", aria-invalid="true",name="num_membro_sindicato" ,type="number" ,required)
 
         md-input-container.md-block(flex-gt-sm)
-          md-select.md-no-underline(placeholder="Sindicato", ng-model="item.id_sindicato", md-on-open="getFrom('api/sindicato','unions')", style="min-width: 200px;",required)
-            md-option(ng-value="union.id_sindicato",ng-repeat="union in unions") {{union.den_sindicato}}
+          label Sindicato
+          md-select.md-no-underline(ng-model="item.id_sindicato", style="min-width: 200px;",ng-required)
+            md-option(ng-repeat="union in unions", ng-value="union.id_sindicato") {{union.den_sindicato}}
+
 
       md-dialog-actions(layout="row", layout-align="end center")
         md-button(type="submit" ng-click="answer(item)")

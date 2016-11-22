@@ -18,10 +18,11 @@
         $scope.showAdvanced = function(ev,edit) {
             //TODO : maybe filter the date.
             if(edit){
+                tryParseNtoN(edit); //make numbers be numbers
                 $scope.currentManagedCard = edit;
             } else {
                 $scope.currentManagedCard = {
-                    num_matricula: Number(String(+new Date).substr(0,11)),
+                    num_matricula: getDateInIdForm(),
                     nom_funcionario: undefined,
                     den_endereco:undefined,
                     num_telefone: undefined,
@@ -39,9 +40,22 @@
                 clickOutsideToClose:true,
                 fullscreen: false, // Only for -xs, -sm breakpoints.
                 locals: {
-                    item: $scope.currentManagedCard
+                    item: $scope.currentManagedCard,
+                    requestItems: [
+                        ['api/sindicato','unions'],
+                        ['api/cargo','offices']
+                    ]
                 },
             }).then(function(answer) {
+                let id = answer.num_matricula;
+                console.log(edit);
+                if(edit) {
+                    answer = getDiff(answer, edit);
+                    console.log(answer);
+                    //If there's no diff.
+                    if(!Object.keys(answer).length) return;
+                    return;
+                }
                 let converted = angular.toJson(answer);
 
                 if (!converted || converted.indexOf('undefined')!=-1){
@@ -50,7 +64,7 @@
                 }
 
                 if(edit){
-                    $http.post(apiBaseUrl, converted)
+                    $http.put(apiBaseUrl+"num_matricula/"+id, converted)
                         .then(function success(response) {
                             $scope.employees = response.data;
                             showSimpleToast("Adicionado");
