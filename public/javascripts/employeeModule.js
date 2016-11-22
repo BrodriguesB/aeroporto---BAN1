@@ -90,6 +90,10 @@
         function getAll(){
             $http.get(apiBaseUrl).then(function (response) {
                 $scope.employees = response.data;
+
+                response.data.forEach((x)=>{
+                    getSpecificToScope('api/sindicato/den_sindicato/id_sindicato/'+x.id_sindicato,x.id_sindicato);
+                });
             });
         }
 
@@ -103,7 +107,6 @@
         };
 
         getAll();
-
 
 
     });

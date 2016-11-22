@@ -46,7 +46,12 @@
                     .textContent(message)
                     .position("top right")
                     .hideDelay(3000)
+                    .parent(document)
             );
+            console.log($mdToast.simple()
+                .textContent(message)
+                .position("top right")
+                .hideDelay(3000))
         }
 
 
@@ -70,7 +75,7 @@
                         $scope.form.$error.required.forEach((x)=>{
                             if(x.$viewValue==undefined){
                                 return;
-                            };
+                            }
                         });
                     }
                 }
@@ -124,8 +129,23 @@
             return Number(String(+new Date).substr(2,13));
         }
 
+        $scope.requestedsArr = {};
+        function getSpecificToScope(apiUrl,keyForRequestedsArr){
+            console.log($scope.requestedsArr);
+
+            if($scope.requestedsArr[keyForRequestedsArr]){
+                //Only works after request is done.
+                console.info("Already requested to scope from given key :",keyForRequestedsArr);
+                return;
+            };
+            $http.get(apiUrl).then(function (response) {
+                $scope.requestedsArr[keyForRequestedsArr] = response.data;
+            });
+        }
+
         //FIXME: move to global scope.
         window.getDiff = getDiff;
+        window.getSpecificToScope = getSpecificToScope;
         window.getDateInIdForm = getDateInIdForm;
         window.DialogController = DialogController;
         window.showSimpleToast = showSimpleToast;
