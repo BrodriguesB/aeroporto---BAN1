@@ -65,7 +65,14 @@
 
             $scope.answer = function(answer) {
                 if(!$scope.form.$valid){
-                    return;
+                    //So, there's A FUCKING PROBLEM ON FUCKING MD-SELECT, WHERE IT DOESNT SET THE FUCKING MODEL VALUE(ng-options dont exist :D).
+                    if($scope.form.$error.required){
+                        $scope.form.$error.required.forEach((x)=>{
+                            if(x.$viewValue==undefined){
+                                return;
+                            };
+                        });
+                    }
                 }
 
                 tryParseNtoN(answer);

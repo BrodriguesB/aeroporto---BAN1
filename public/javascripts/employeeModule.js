@@ -67,7 +67,7 @@
                     $http.put(apiBaseUrl+"num_matricula/"+id, converted)
                         .then(function success(response) {
                             $scope.employees = response.data;
-                            showSimpleToast("Adicionado");
+                            showSimpleToast("Editado");
                         }, function error() {
                             showSimpleToast("Houve um erro ao adicionar");
                         });

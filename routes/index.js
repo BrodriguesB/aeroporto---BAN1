@@ -191,9 +191,13 @@ router.post('/api/:table', function (req, res, next) {
         //execute query.
         let create = generalQB.exec(generalQB.CREATE(),generalQB.helperObject.data);
 
-        console.log(generalQB.CREATE());
         //if query succeeded
         if(create){
+
+            // After all data is returned, close connection and return results
+            create.on('end', function () {
+                returnAllFromTable(req,res);
+            });
             returnAllFromTable(req,res);
         } else {
             console.error("Could not execute query from given object");
