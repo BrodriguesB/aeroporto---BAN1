@@ -49,7 +49,7 @@ script(type="text/ng-template" id="dialog1.tmpl.html")
 
                 md-input-container.md-block(flex-gt-sm)
                     label(for="qtd_peso") Quantidade maxima de carga (KG)
-                    input#qtd_peso.md-input(ng-model="item.qtd_peso", aria-invalid="true",name="qtd_peso",step="100", type="number", required)
+                    input#qtd_peso.md-input(ng-model="item.qtd_peso", aria-invalid="true",name="qtd_peso",step="100", type="number",max="9900" required)
 
                 md-input-container.md-block(flex-gt-sm)
                     label(for="num_maximo_aeroporto") Num max aeroporto

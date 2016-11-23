@@ -6,7 +6,7 @@
      */
 
     /*global angular*/
-    angular.module('MainApp',['ngRoute','ngMessages','ngMaterial','OfficeModule','EmployeeModule','PlanesModelsModule','UnionModule','PlanesModule']);
+    angular.module('MainApp',['ngRoute','ngMessages','ngMaterial','OfficeModule','EmployeeModule','PlanesModelsModule','UnionModule','PlanesModule','SkillsModule']);
 
 
     angular.module('MainApp').config(function($routeProvider, $locationProvider) {
@@ -35,6 +35,10 @@
             .when('/avioes', {
                 templateUrl: '/avioes',
                 controller: 'planesController',
+            })
+            .when('/habilidades', {
+                templateUrl: '/habilidades',
+                controller: 'skillsController',
             })
 
     });

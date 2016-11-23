@@ -45,6 +45,10 @@ router.get('/modelos', function (req, res, next) {
 router.get('/avioes', function (req, res, next) {
     res.render('planes');
 });
+/* GET office page. */
+router.get('/habilidades', function (req, res, next) {
+    res.render('skills');
+});
 
 
 

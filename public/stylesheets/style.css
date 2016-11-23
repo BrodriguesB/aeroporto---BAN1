@@ -40,3 +40,15 @@ a {
 }
 
 
+table{
+  width:100%
+}
+
+thead tr td{
+  border-bottom: 1px solid #dddddd;
+}
+tbody tr td{
+  padding: 15px 5px 15px;
+  border-bottom: 1px solid #dddddd;
+}
+
