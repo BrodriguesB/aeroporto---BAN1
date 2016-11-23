@@ -6,7 +6,7 @@
      */
 
     /*global angular*/
-    angular.module('MainApp',['ngRoute','ngMessages','ngMaterial','OfficeModule','EmployeeModule','PlanesModelsModule','UnionModule']);
+    angular.module('MainApp',['ngRoute','ngMessages','ngMaterial','OfficeModule','EmployeeModule','PlanesModelsModule','UnionModule','PlanesModule']);
 
 
     angular.module('MainApp').config(function($routeProvider, $locationProvider) {
@@ -31,6 +31,10 @@
             .when('/modelos', {
                 templateUrl: '/modelos',
                 controller: 'planesModelsController',
+            })
+            .when('/avioes', {
+                templateUrl: '/avioes',
+                controller: 'planesController',
             })
 
     });

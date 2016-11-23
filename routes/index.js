@@ -41,6 +41,11 @@ router.get('/modelos', function (req, res, next) {
     res.render('planesModel');
 });
 
+/* GET office page. */
+router.get('/avioes', function (req, res, next) {
+    res.render('planes');
+});
+
 
 
 /**

@@ -5,14 +5,14 @@
      */
 
     /*global angular*/
-    angular.module('PlanesModelsModule',['ngMaterial','ngMessages']);
+    angular.module('PlanesModule',['ngMaterial','ngMessages']);
 
     /**
      * TODO:Move controller to a separated file.
      */
-    angular.module('PlanesModelsModule').controller('planesModelsController', function ($scope, $http,$mdDialog) {
+    angular.module('PlanesModule').controller('planesController', function ($scope, $http,$mdDialog) {
 
-        const apiBaseUrl = '/api/modelo_aviao/';
+        const apiBaseUrl = '/api/aviao/';
         $scope.currentManagedCard = undefined;
 
         $scope.showAdvanced = function(ev,edit) {
@@ -23,11 +23,8 @@
                 $scope.currentManagedCard = edit;
             } else {
                 $scope.currentManagedCard = {
-                    id_modelo_aviao: getDateInIdForm(),
-                    cod_modelo_aviao: undefined,
-                    num_capacidade_passageiros:undefined,
-                    qtd_peso: undefined,
-                    num_maximo_aeroporto:undefined,
+                    id_aviao: getDateInIdForm(),
+                    id_modelo_aviao: undefined,
                 }
             }
             $mdDialog.show({
@@ -39,10 +36,13 @@
                 fullscreen: false, // Only for -xs, -sm breakpoints.
                 locals: {
                     item: $scope.currentManagedCard,
-                    requestItems: false
+                    requestItems: [
+                        ['api/modelo_aviao/','planeModels'],
+                        ['api/cargo','offices']
+                    ]
                 },
             }).then(function(answer) {
-                let id= answer.id_modelo_aviao;
+                let id= answer.id_aviao;
                 if(edit) {
                     answer = getDiff(answer, edit);
                     console.log(answer);
@@ -57,7 +57,7 @@
                 }
 
                 if(edit){
-                    $http.put(apiBaseUrl+"id_modelo_aviao/"+id, converted)
+                    $http.put(apiBaseUrl+"id_aviao/"+id, converted)
                         .then(function success(response) {
                             $scope.planes = response.data;
                             showSimpleToast("Alterado"); //TODO:Call toaster.
@@ -69,7 +69,7 @@
                     $http.post(apiBaseUrl, converted)
                         .then(function success(response) {
                             $scope.planes = response.data;
-                            showSimpleToast("Modelo adicionado"); //TODO:Call toaster.
+                            showSimpleToast("Avião adicionado"); //TODO:Call toaster.
                         }, function error() {
                             showSimpleToast("Houve um erro ao adicionar");
                         });
@@ -83,16 +83,20 @@
         function getPlanes(){
             $http.get(apiBaseUrl).then(function (response) {
                 $scope.planes = response.data;
+
+                response.data.forEach((x)=>{
+                    getSpecificToScope('api/modelo_aviao/single/cod_modelo_aviao/id_modelo_aviao/'+x.id_modelo_aviao,x.id_modelo_aviao);
+                });
             });
         }
 
         $scope.deletePlane = function (plane){
-            console.debug(plane.id_modelo_aviao);
-            $http.delete(apiBaseUrl+'id_modelo_aviao/'+plane.id_modelo_aviao)
+            console.debug(plane.id_aviao);
+            $http.delete(apiBaseUrl+'id_aviao/'+plane.id_aviao)
                 .success(function (response) {
                     $scope.planes = response;
-                    showSimpleToast("Modelo removido")
-            });
+                    showSimpleToast("Removed plane.")
+                });
         };
 
         getPlanes();
