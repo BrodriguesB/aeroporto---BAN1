@@ -83,11 +83,19 @@
         function getPlanes(){
             $http.get(apiBaseUrl).then(function (response) {
                 $scope.planes = response.data;
+
+                response.data.forEach((x)=>{
+                    getSpecificToScope('api/habilidades/count/id_modelo/'+x.id_modelo_aviao,x.id_modelo_aviao+'counter');
+                });
             });
         }
 
         $scope.deletePlane = function (plane){
             console.debug(plane.id_modelo_aviao);
+            if($scope.requestedsArr[plane.id_modelo_aviao+'counter'] != 0){
+                showSimpleToast("Não é possivel deletar o modelo pois há habilidades registradas nele.");
+                return;
+            }
             $http.delete(apiBaseUrl+'id_modelo_aviao/'+plane.id_modelo_aviao)
                 .success(function (response) {
                     $scope.planes = response;

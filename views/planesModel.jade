@@ -21,6 +21,7 @@ md-content
                             md-list-item
                                 p Num : {{plane.num_maximo_aeroporto}}
                             md-list-item
+                                p N° de especialistas no modelo : {{requestedsArr[plane.id_modelo_aviao+'counter']}}
                     md-card-actions(layout="row", layout-align="end center")
                         md-button(ng-click="showAdvanced($event,plane)")
                             md-icon.material-icons.md-ligh.md-avatar-icon edit
