@@ -92,7 +92,7 @@
                 $scope.employees = response.data;
 
                 response.data.forEach((x)=>{
-                    getSpecificToScope('api/sindicato/den_sindicato/id_sindicato/'+x.id_sindicato,x.id_sindicato);
+                    getSpecificToScope('api/sindicato/single/den_sindicato/id_sindicato/'+x.id_sindicato,x.id_sindicato);
                 });
             });
         }

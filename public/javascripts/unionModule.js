@@ -79,6 +79,10 @@
 
         $scope.delete = function (item){
             console.debug(item.id_sindicato);
+            if($scope.requestedsArr[item.id_sindicato+'counter'] != 0){
+                showSimpleToast("Não é possivel deletar o sindicato pois há funcionarios registrados nele.");
+                return;
+            }
             $http.delete(apiBaseUrl+'id_sindicato/'+item.id_sindicato)
                 .success(function (response) {
                     $scope.unions = response;
@@ -89,6 +93,9 @@
         function getAll(){
             $http.get(apiBaseUrl).then(function (response) {
                 $scope.unions = response.data;
+                response.data.forEach((x)=>{
+                    getSpecificToScope('api/funcionario/count/id_sindicato/'+x.id_sindicato,x.id_sindicato+'counter');
+                });
             });
         }
         getAll();

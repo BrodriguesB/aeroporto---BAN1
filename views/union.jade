@@ -6,7 +6,7 @@ md-content
         md-button(ng-click="showAdvanced($event)") Adicionar
 
     md-content.md-padding(layout-xs="column", layout="column")
-        md-grid-list(md-cols-gt-md="6", md-cols="3", md-cols-md="3", md-row-height-gt-md="8:10", md-row-height="8:10", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
+        md-grid-list(md-cols-gt-md="5", md-cols="3", md-cols-md="3", md-row-height-gt-md="8:10", md-row-height="8:10", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
             //- List
             md-grid-tile(ng-repeat="union in unions")
                 md-card(flex)
@@ -17,6 +17,8 @@ md-content
                         md-list
                             md-list-item
                                 p Id sindicato : {{union.id_sindicato}}
+                            md-list-item
+                                p Funcionarios no sindicato : {{requestedsArr[union.id_sindicato+'counter']}}
                             md-list-item
                     md-card-actions(layout="row", layout-align="end center")
                         md-button(ng-click="showAdvanced($event,union)")

@@ -46,12 +46,7 @@
                     .textContent(message)
                     .position("top right")
                     .hideDelay(3000)
-                    .parent(document)
             );
-            console.log($mdToast.simple()
-                .textContent(message)
-                .position("top right")
-                .hideDelay(3000))
         }
 
 
@@ -130,6 +125,7 @@
         }
 
         $scope.requestedsArr = {};
+        /** Put a requested {Any} on the requestedsArrays named as the provided key.*/
         function getSpecificToScope(apiUrl,keyForRequestedsArr){
             console.log($scope.requestedsArr);
 
@@ -138,7 +134,7 @@
                 console.info("Already requested to scope from given key :",keyForRequestedsArr);
                 return;
             };
-            $http.get(apiUrl).then(function (response) {
+             $http.get(apiUrl).then(function (response) {
                 $scope.requestedsArr[keyForRequestedsArr] = response.data;
             });
         }

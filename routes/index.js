@@ -206,7 +206,6 @@ router.post('/api/:table', function (req, res, next) {
     });
 });
 
-
 //READ
 router.get('/api/:table', returnAllFromTable);
 
@@ -306,8 +305,8 @@ router.put('/api/:table/:id_column/:id', (req, res, next) => {
     });
 });
 
-//
-router.get('/api/:table/:column/:column_id/:id', function(req, res, next){
+//Get a name, or something, specific.
+router.get('/api/:table/single/:column/:column_id/:id', function(req, res, next){
 
     // Grab data from the URL parameters
     const table = req.params.table;
@@ -336,6 +335,48 @@ router.get('/api/:table/:column/:column_id/:id', function(req, res, next){
             // Stream results back one row at a time
             query.on('row', function (row) {
                 result = row[column];
+            });
+            // After all data is returned, close connection and return results
+            query.on('end', function () {
+                done();
+                return res.json(result);
+            });
+        } else {
+            console.error("Could not execute query from given object");
+            return res.status(500).json({success: false, data: err,errorObject:req.body});
+        }
+    });
+});
+
+//Count a name, or something, specific.
+router.get('/api/:table/count/:column/:id/', function(req, res, next){
+
+    // Grab data from the URL parameters
+    const table = req.params.table;
+    const column = req.params.column;
+    const id = req.params.id;
+
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionDBStr, function (err, client, done) {
+        // Handle connection errors
+        if (err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+
+        // SQL Query > Select Data
+        var quer= `SELECT COUNT(*) FROM public."${table}" WHERE ${column}='${id}'`;
+        console.log(quer);
+        const query = client.query(quer);
+
+
+        let result;
+        //if query succeeded
+        if(query){
+            // Stream results back one row at a time
+            query.on('row', function (row) {
+                result = row.count;
             });
             // After all data is returned, close connection and return results
             query.on('end', function () {
