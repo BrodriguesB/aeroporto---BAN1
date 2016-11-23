@@ -86,17 +86,26 @@
             });
         }
 
-        $scope.delete = function (item){
+        $scope.delete = function (item,ev){
             console.debug(item.id_cargo);
             if($scope.requestedsArr[item.id_cargo+'counter'] != 0){
-                showSimpleToast("Não é possivel deletar o cargo pois há funcionarios registrados nele.");
-                return;
-            }
-            $http.delete(apiBaseUrl+'id_cargo/'+item.id_cargo)
-                .success(function (response) {
-                    $scope.offices = response;
-                    showSimpleToast("Cargo removido");
+                var confirm = $mdDialog.confirm()
+                    .title('Tem certeza?')
+                    .textContent('Há funcionarios neste cargo, se deleta-lo todos eles irão pro limbo junto.')
+                    .targetEvent(ev)
+                    .ok('Manda pro limbo')
+                    .cancel('Nah...');
+
+                $mdDialog.show(confirm).then(function() {
+                    showSimpleToast("Me recuso a fazer tamanha atrocidade.");
                 });
+            } else {
+                $http.delete(apiBaseUrl + 'id_cargo/' + item.id_cargo)
+                    .success(function (response) {
+                        $scope.offices = response;
+                        showSimpleToast("Cargo removido");
+                    });
+            }
         };
 
 

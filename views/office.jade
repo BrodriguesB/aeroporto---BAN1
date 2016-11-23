@@ -22,7 +22,7 @@ md-content
           md-card-actions(layout="row", layout-align="end center")
             md-button(ng-click="showAdvanced($event,office)")
               md-icon.material-icons.md-ligh.md-avatar-icon edit
-            md-button(ng-click="delete(office)")
+            md-button(ng-click="delete(office,$event)")
               md-icon.material-icons.md-ligh.md-avatar-icon close
 script(type="text/ng-template" id="dialog1.tmpl.html")
   md-dialog(layout-padding="",style="min-width:500px;")
