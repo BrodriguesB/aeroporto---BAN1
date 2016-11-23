@@ -97,6 +97,27 @@
                 });
         };
 
+        $scope.customDelete = function (registry){
+            console.debug(registry);
+
+
+            $http({
+                method: 'DELETE',
+                url: apiBaseUrl+"customDelete",
+                data: {
+                    queryLastPart: `WHERE id_funcionario='${registry.id_funcionario}' AND id_modelo='${registry.id_modelo}'`
+                },
+                headers: {
+                    'Content-type': 'application/json;charset=utf-8'
+                }
+            }).success(function (response) {
+                    getAll();
+                    showSimpleToast("Removido.")
+                }).error(function (response) {
+                    showSimpleToast("Ocorreu um problema na remoção.")
+                });
+        };
+
         getAll();
 
     });

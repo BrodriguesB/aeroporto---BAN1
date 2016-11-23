@@ -287,6 +287,29 @@ router.delete('/api/:table/:column/:id', function(req, res, next) {
     });
 });
 
+/**
+ * DELETE
+ * delete a registry from a table from the give id.
+ */
+router.delete('/api/:table/customDelete/', function(req, res, next) {
+    console.log(req.body.queryLastPart);
+    const table = req.params.table;
+
+
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionDBStr, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+        console.log(`DELETE FROM public.${table} ${req.body.queryLastPart};`);
+        let query = client.query(`DELETE FROM public.${table} ${req.body.queryLastPart};`);
+        query.on("end",()=>{returnAllFromTable(req,res);})
+    });
+});
+
 router.put('/api/:table/:id_column/:id', (req, res, next) => {
 
     pg.connect(connectionDBStr, (err, client, done) => {

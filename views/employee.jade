@@ -29,7 +29,8 @@ md-content
                 p Membro sindicato : {{employee.num_membro_sindicato}}
               md-list-item
                 p Sindicato : {{requestedsArr[employee.id_sindicato]}}
-              md-list-item
+              md-list-item(ng-if="requestedsArr[employee.num_matricula+'counter']!='0'")
+                p Especialista em {{requestedsArr[employee.num_matricula+'counter']}} modelos.
           md-card-actions(layout="row", layout-align="end center")
             md-button(ng-click="showAdvanced($event,employee)")
               md-icon.material-icons.md-ligh.md-avatar-icon edit

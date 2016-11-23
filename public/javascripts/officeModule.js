@@ -93,7 +93,7 @@
                     .title('Tem certeza?')
                     .textContent('Há funcionarios neste cargo, se deleta-lo todos eles irão pro limbo junto.')
                     .targetEvent(ev)
-                    .ok('Manda pro limbo')
+                    .ok('')
                     .cancel('Nah...');
 
                 $mdDialog.show(confirm).then(function() {

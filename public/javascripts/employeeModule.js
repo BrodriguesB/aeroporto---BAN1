@@ -94,12 +94,17 @@
                 response.data.forEach((x)=>{
                     getSpecificToScope('api/sindicato/single/den_sindicato/id_sindicato/'+x.id_sindicato,x.id_sindicato);
                     getSpecificToScope('api/cargo/single/den_cargo/id_cargo/'+x.id_cargo,x.id_cargo);
+                    getSpecificToScope('api/habilidades/count/id_funcionario/'+x.num_matricula,x.num_matricula+'counter');
                 });
             });
         }
 
         $scope.delete = function (item){
             console.debug(item.num_matricula);
+            if($scope.requestedsArr[item.num_matricula+'counter'] != 0){
+                showSimpleToast("Não é possivel deletar o funcionario pois há habilidades registradas para o mesmo.");
+                return;
+            }
             $http.delete(apiBaseUrl+"num_matricula/"+item.num_matricula)
                 .success(function (response) {
                     $scope.employees = response;
