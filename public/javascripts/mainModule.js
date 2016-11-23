@@ -132,8 +132,7 @@
             if($scope.requestedsArr[keyForRequestedsArr]){
                 //Only works after request is done.
                 console.info("Already requested to scope from given key :",keyForRequestedsArr);
-                return;
-            };
+            }
              $http.get(apiUrl).then(function (response) {
                 $scope.requestedsArr[keyForRequestedsArr] = response.data;
             });
