@@ -198,7 +198,6 @@ router.post('/api/:table', function (req, res, next) {
             create.on('end', function () {
                 returnAllFromTable(req,res);
             });
-            returnAllFromTable(req,res);
         } else {
             console.error("Could not execute query from given object");
             return res.status(500).json({success: false, data: err,errorObject:req.body});

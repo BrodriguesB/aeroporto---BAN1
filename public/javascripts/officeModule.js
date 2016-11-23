@@ -79,12 +79,20 @@
         function getAll(){
             $http.get(apiBaseUrl).then(function (response) {
                 $scope.offices = response.data;
+
+                response.data.forEach((x)=>{
+                    getSpecificToScope('api/funcionario/count/id_cargo/'+x.id_cargo,x.id_cargo+'counter');
+                });
             });
         }
 
         $scope.delete = function (item){
-            console.debug(item.num_matricula);
-            $http.delete(apiBaseUrl+'num_matricula/'+item.num_matricula)
+            console.debug(item.id_cargo);
+            if($scope.requestedsArr[item.id_cargo+'counter'] != 0){
+                showSimpleToast("Não é possivel deletar o cargo pois há funcionarios registrados nele.");
+                return;
+            }
+            $http.delete(apiBaseUrl+'id_cargo/'+item.id_cargo)
                 .success(function (response) {
                     $scope.offices = response;
                     showSimpleToast("Cargo removido");

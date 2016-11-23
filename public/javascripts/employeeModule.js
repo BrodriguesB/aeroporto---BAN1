@@ -65,7 +65,7 @@
                 if(edit){
                     $http.put(apiBaseUrl+"num_matricula/"+id, converted)
                         .then(function success(response) {
-                            $scope.employees = response.data;
+                            getAll();
                             showSimpleToast("Editado");
                         }, function error() {
                             showSimpleToast("Houve um erro ao adicionar");
@@ -74,7 +74,7 @@
                 } else {
                     $http.post(apiBaseUrl, converted)
                         .then(function success(response) {
-                            $scope.employees = response.data;
+                            getAll();
                             showSimpleToast("Adicionado");
                         }, function error() {
                             showSimpleToast("Houve um erro ao adicionar");
@@ -93,6 +93,7 @@
 
                 response.data.forEach((x)=>{
                     getSpecificToScope('api/sindicato/single/den_sindicato/id_sindicato/'+x.id_sindicato,x.id_sindicato);
+                    getSpecificToScope('api/cargo/single/den_cargo/id_cargo/'+x.id_cargo,x.id_cargo);
                 });
             });
         }
