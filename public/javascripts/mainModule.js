@@ -6,7 +6,7 @@
      */
 
     /*global angular*/
-    angular.module('MainApp',['ngRoute','ngMessages','ngMaterial','OfficeModule','EmployeeModule','PlanesModelsModule','UnionModule','PlanesModule','SkillsModule']);
+    angular.module('MainApp',['ngRoute','ngMessages','ngMaterial','OfficeModule','EmployeeModule','PlanesModelsModule','UnionModule','PlanesModule','SkillsModule','principalTestModule','principalTestModule']);
 
 
     angular.module('MainApp').config(function($routeProvider, $locationProvider) {
@@ -39,6 +39,14 @@
             .when('/habilidades', {
                 templateUrl: '/habilidades',
                 controller: 'skillsController',
+            })
+            .when('/teste_principal', {
+                templateUrl: '/teste_principal',
+                controller: 'principalTestController',
+            })
+            .when('/teste_aviao', {
+                templateUrl: '/teste_aviao',
+                controller: 'principalTestController',
             })
 
     });

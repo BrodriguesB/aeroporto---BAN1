@@ -1,0 +1,32 @@
+//- Pug mixins
+mixin cardFooter(angularVariable)
+  md-card-actions(layout="row", layout-align="end center")
+    md-button(ng-click="showAdvanced($event,"+angularVariable+")")
+      md-icon.material-icons.md-ligh.md-avatar-icon edit
+    md-button(ng-click="delete("+angularVariable+")")
+      md-icon.material-icons.md-ligh.md-avatar-icon close
+
+mixin dialogFooter(editItem)
+  md-dialog-actions(layout="row", layout-align="end center")
+    md-button(type="clear")
+      md-icon.material-icons.md-ligh.md-avatar-icon refresh
+    md-button(ng-click="answer("+editItem+")")
+      md-icon.material-icons.md-ligh.md-avatar-icon done
+
+mixin dialogTitle(idk,title,model,inputtype)
+  md-title
+    h3(layout-gt-xs="row")
+      md-input-container.md-block(flex-gt-sm)
+        label(for!=idk)= title
+        input.md-input(id!=idk,ng-model!=model, aria-invalid="true",name!=idk,type!=inputtype,disabled)
+      md-input-container
+        md-button.md-icon-button.md-primary(aria-label!=title,ng-click="cancel()",style="display:inline-block;top: -35px;")
+          md-icon.material-icons close
+
+mixin materialInput(idk,title,model,inputtype)
+  md-input-container.md-block(flex-gt-xs)
+    label(for!=idk)= title
+    input.md-input(id!=idk, ng-model!=model, aria-invalid="false",name!=idk,type!=inputtype, require)
+
+
+block html

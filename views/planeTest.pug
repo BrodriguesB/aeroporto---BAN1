@@ -1,0 +1,42 @@
+extends globalMixins
+
+block html
+  - var mainObject = 'planeTest'
+  md-content
+    h1 Sindicatos
+
+    <!-- Button trigger modal -->
+    div
+      md-button(ng-click="showAdvanced($event)") Adicionar
+
+    md-content.md-padding(layout-xs="column", layout="column")
+      md-grid-list(md-cols-gt-md="5", md-cols="3", md-cols-md="3", md-row-height-gt-md="8:10", md-row-height="8:10", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
+        //- List
+        md-grid-tile(ng-repeat=""+mainObject+" in "+mainObject+"s")
+          md-card(flex)
+            md-card-title
+              md-card-title-text
+                span.md-headline ID {{principalTest.id_teste_principal}}
+            md-card-content
+              md-list
+                md-list-item: p Test anac : {{#{mainObject}.id_teste_aviao}}
+                md-list-item: p Test anac : {{#{mainObject}.id_teste_principal}}
+                md-list-item: p Test anac : {{#{mainObject}.id_aviao}}
+                md-list-item: p Test anac : {{#{mainObject}.dat_teste}}
+                md-list-item: p Test anac : {{#{mainObject}.id_funcionario}}
+                md-list-item: p Test anac : {{#{mainObject}.val_pontuacao_aviao}}
+            +cardFooter('principalTest')
+
+  script(type="text/ng-template" id="dialog1.tmpl.html")
+    md-dialog(layout-padding="",style="min-width:500px;")
+      form(ng-cloak,name="form")
+        //- Edit | Add
+
+        +dialogTitle("id_teste_aviao","Id","item.id_teste_principal","number")
+
+        md-dialog-content(layout-padding)
+          +materialInput('id_teste_principal','Codigo do teste ANAC','item.cod_teste_anac','number')
+          +materialInput('id_aviao','Descrição','item.den_teste','text')
+          +materialInput('dat_teste','Pontuação no teste','item.val_pontuacao_maxima','number')
+          +materialInput('id_funcionario','Pontuação no teste','item.val_pontuacao_maxima','number')
+      +dialogFooter('item')

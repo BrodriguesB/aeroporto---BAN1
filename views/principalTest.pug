@@ -1,0 +1,38 @@
+extends globalMixins
+
+block html
+  - var mainObject = 'principalTest'
+  md-content
+    h1 Sindicatos
+
+    <!-- Button trigger modal -->
+    div
+      md-button(ng-click="showAdvanced($event)") Adicionar
+
+    md-content.md-padding(layout-xs="column", layout="column")
+      md-grid-list(md-cols-gt-md="5", md-cols="3", md-cols-md="3", md-row-height-gt-md="8:10", md-row-height="8:10", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
+        //- List
+        md-grid-tile(ng-repeat=""+mainObject+" in "+mainObject+"s")
+          md-card(flex)
+            md-card-title
+              md-card-title-text
+                span.md-headline ID {{principalTest.id_teste_principal}}
+            md-card-content
+              md-list
+                md-list-item: p Test anac : {{#{mainObject}.cod_teste_anac}}
+                md-list-item: p Test anac : {{#{mainObject}.den_teste}}
+                md-list-item: p Test anac : {{#{mainObject}.val_pontuacao_maxima}}
+            +cardFooter('principalTest')
+
+  script(type="text/ng-template" id="dialog1.tmpl.html")
+    md-dialog(layout-padding="",style="min-width:500px;")
+      form(ng-cloak,name="form")
+        //- Edit | Add
+
+        +dialogTitle("id_teste_principal","Id","item.id_teste_principal","number")
+
+        md-dialog-content(layout-padding)
+          +materialInput('cod_teste_anac','Codigo do teste ANAC','item.cod_teste_anac','number')
+          +materialInput('den_teste','Descrição','item.den_teste','text')
+          +materialInput('val_pontuacao_maxima','Pontuação no teste','item.val_pontuacao_maxima','number')
+      +dialogFooter('item')
