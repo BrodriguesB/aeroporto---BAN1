@@ -97,7 +97,7 @@
 
                 response.data.forEach((x)=>{
                     getSpecificToScope('api/funcionario/single/nom_funcionario/num_matricula/' + x.id_funcionario, x.id_funcionario);
-                    //getSpecificToScope('api/modelo_aviao/single/cod_modelo_aviao/id_modelo_aviao/'+x.id_modelo,x.id_modelo);
+                    getSpecificToScope('api/teste_principal/single/den_teste/id_teste_principal/' + x.id_teste_principal, x.id_teste_principal);
                 });
             });
         }

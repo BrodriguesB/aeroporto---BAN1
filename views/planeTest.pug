@@ -3,7 +3,7 @@ extends globalMixins
 block html
   - var mainObject = 'planeTest'
   md-content
-    h1 Teste avião
+    h1 Testes realizados em aviões
 
     <!-- Button trigger modal -->
     div
@@ -19,8 +19,8 @@ block html
                 span.md-headline ID {{#{mainObject}.id_teste_principal}}
             md-card-content
               md-list
+                +foreignListInfo('Teste :',mainObject + '.id_teste_principal')
                 md-list-item: p Id teste aviao : {{#{mainObject}.id_teste_aviao}}
-                md-list-item: p Id teste principal : {{#{mainObject}.id_teste_principal}}
                 md-list-item: p Id avião: {{#{mainObject}.id_aviao}}
                 md-list-item: p Data do teste: {{#{mainObject}.dat_teste | date : 'dd/MM/yyyy'}}
                 +foreignListInfo('Tester :',mainObject + '.id_funcionario')
