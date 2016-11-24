@@ -82,6 +82,7 @@
 
                 response.data.forEach((x)=>{
                     getSpecificToScope('api/funcionario/count/id_cargo/'+x.id_cargo,x.id_cargo+'counter');
+                    getSpecificToScope('api/funcionario/average/val_salario/id_cargo/', 'average');
                 });
             });
         }

@@ -390,6 +390,54 @@ router.get('/api/:table/single/:column/:column_id/:id', function(req, res, next)
     });
 });
 
+//Get a name, or something, specific.
+router.get('/api/:table/average/:avg_column/:column_id', function (req, res, next) {
+
+    var results = {};
+
+    // Grab data from the URL parameters
+    const table = req.params.table;
+    const columnId = req.params.column_id;
+    const avgColumn = req.params.avg_column;
+
+    // Get a Postgres client from the connection pool
+    pg.connect(connectionDBStr, function (err, client, done) {
+        // Handle connection errors
+        if (err) {
+            done();
+            console.log(err);
+            return res.status(500).json({success: false, data: err});
+        }
+
+        // SQL Query > Select Data
+        //const query = client.query(`SELECT * FROM public."${req.params.table}";`);
+
+        var quer = `SELECT ${columnId},AVG(${avgColumn}) FROM ${table} GROUP BY (${columnId})`;
+        console.log(quer);
+        const query = client.query(quer);
+
+
+        let result;
+        //if query succeeded
+        if (query) {
+            // Stream results back one row at a time
+            query.on('row', function (row) {
+                results[row[columnId]] = {
+                    avg: Number(row["avg"]).toFixed(0)
+                };
+            });
+            // After all data is returned, close connection and return results
+            query.on('end', function () {
+                done();
+                return res.json(results);
+            });
+        } else {
+            console.error("Could not execute query from given object");
+            return res.status(500).json({success: false, data: err, errorObject: req.body});
+        }
+    });
+});
+
 //Count a name, or something, specific.
 router.get('/api/:table/count/:column/:id/', function(req, res, next){
 

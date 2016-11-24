@@ -1,50 +1,54 @@
-md-content
-  h1 Cargos
-  p Lista de cargos cadastrados
+extends globalMixins
 
-  <!-- Button trigger modal -->
-  div
-    md-button(ng-click="showAdvanced($event)") Adicionar
+block html
+  md-content
+    - var mainObject = 'office'
+    h1 Cargos
+    p Lista de cargos cadastrados
 
-  md-content.md-padding(layout-xs="column", layout="column")
-    md-grid-list(md-cols-gt-md="5", md-cols="3", md-cols-md="3", md-row-height-gt-md="1:1.1", md-row-height="1:1.1", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
-      //- List
-      md-grid-tile(ng-repeat="office in offices")
-        md-card(flex)
-          md-card-title
-            md-card-title-text
-              span.md-headline {{office.den_cargo}}
-          md-card-content
-            md-list
-              md-list-item
-                p Id cargo : {{office.id_cargo}}
-              md-list-item
-                p Funcionarios no cargo : {{requestedsArr[office.id_cargo+'counter']}}
-          md-card-actions(layout="row", layout-align="end center")
-            md-button(ng-click="showAdvanced($event,office)")
-              md-icon.material-icons.md-ligh.md-avatar-icon edit
-            md-button(ng-click="delete(office,$event)")
-              md-icon.material-icons.md-ligh.md-avatar-icon close
-script(type="text/ng-template" id="dialog1.tmpl.html")
-  md-dialog(layout-padding="",style="min-width:500px;")
-    form(ng-cloak,name="form")
-      //- Edit | Add
-      md-title
-        h4(layout-gt-xs="row")
-          md-input-container.md-block(flex-gt-sm)
-            label(for="id_cargo") Id
-            input#id_cargo.md-input(ng-model="item.id_cargo", aria-invalid="true",name="id_cargo",type="number",disabled)
-          md-input-container
-            md-button.md-icon-button.md-primary(aria-label="Profile",ng-click="cancel()",style="display:inline-block;top: -35px;")
-              md-icon.material-icons close
+    <!-- Button trigger modal -->
+    div
+      md-button(ng-click="showAdvanced($event)") Adicionar
 
-      md-dialog-content(layout-padding)
-        md-input-container.md-block(flex-gt-xs)
-          label(for="den_cargo") Nome do cargo
-          input#den_cargo.md-input(ng-model="item.den_cargo", aria-invalid="false",name="den_cargo",md-autofocus,required)
+    md-content.md-padding(layout-xs="column", layout="column")
+      md-grid-list(md-cols-gt-md="5", md-cols="3", md-cols-md="3", md-row-height-gt-md="1:1.1", md-row-height="1:1.1", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
+        //- List
+        md-grid-tile(ng-repeat="office in offices")
+          md-card(flex)
+            md-card-title
+              md-card-title-text
+                span.md-headline {{office.den_cargo}}
+            md-card-content
+              md-list
+                md-list-item
+                  p Id cargo : {{office.id_cargo}}
+                md-list-item
+                  p Funcionarios no cargo : {{requestedsArr[office.id_cargo+'counter']}}
 
-    md-dialog-actions(layout="row", layout-align="end center")
-      md-button(type="clear")
-        md-icon.material-icons.md-ligh.md-avatar-icon refresh
-      md-button(ng-click="answer(item)")
-        md-icon.material-icons.md-ligh.md-avatar-icon done
+                md-list-item(ng-if="requestedsArr['average'][" + mainObject + ".id_cargo].avg")
+                  p Media dos salarios:  {{requestedsArr['average'][#{mainObject}.id_cargo].avg}}
+
+            +cardFooter(mainObject)
+  script(type="text/ng-template" id="dialog1.tmpl.html")
+    md-dialog(layout-padding="",style="min-width:500px;")
+      form(ng-cloak,name="form")
+        //- Edit | Add
+        md-title
+          h4(layout-gt-xs="row")
+            md-input-container.md-block(flex-gt-sm)
+              label(for="id_cargo") Id
+              input#id_cargo.md-input(ng-model="item.id_cargo", aria-invalid="true",name="id_cargo",type="number",disabled)
+            md-input-container
+              md-button.md-icon-button.md-primary(aria-label="Profile",ng-click="cancel()",style="display:inline-block;top: -35px;")
+                md-icon.material-icons close
+
+        md-dialog-content(layout-padding)
+          md-input-container.md-block(flex-gt-xs)
+            label(for="den_cargo") Nome do cargo
+            input#den_cargo.md-input(ng-model="item.den_cargo", aria-invalid="false",name="den_cargo",md-autofocus,required)
+
+      md-dialog-actions(layout="row", layout-align="end center")
+        md-button(type="clear")
+          md-icon.material-icons.md-ligh.md-avatar-icon refresh
+        md-button(ng-click="answer(item)")
+          md-icon.material-icons.md-ligh.md-avatar-icon done
