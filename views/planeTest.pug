@@ -34,8 +34,8 @@ block html
 
         +dialogTitle("id_teste_aviao","Id","item.id_teste_aviao","number")
 
-        md-dialog-content(layout-padding)
-          +foreignSelect('Teste principal','item.id_teste_principal','id_teste_principal','principalTest','principalTest.id_teste_principal','principalTest.den_teste')
+        md-dialog-content(layout-padding,style="padding-top:10px")
+          +foreignSelectDisabledOnEdit('Teste principal','item.id_teste_principal','id_teste_principal','principalTest','principalTest.id_teste_principal','principalTest.den_teste')()
           +foreignSelect('Avião','item.id_aviao','id_aviao','plane','plane.id_aviao','searchValueForGiven(planesModels,plane.id_modelo_aviao,"cod_modelo_aviao")+" - "+plane.id_aviao ')
           +materialDatePicker('dat_teste','Data do teste','item.dat_teste')
           +foreignSelect('Realizado por','item.id_funcionario','id_funcionario','employee','employee.num_matricula','employee.nom_funcionario')

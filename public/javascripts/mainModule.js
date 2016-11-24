@@ -70,6 +70,8 @@
             tryParseNtoN(item);
             $scope.item = Object.assign({},item); //Prevent two way data bind.
 
+            $scope.isInEditMode = Object.keys(item).length > 2;
+            console.log($scope.isInEditMode);
 
             $scope.hide = function() {
                 $mdDialog.hide();
