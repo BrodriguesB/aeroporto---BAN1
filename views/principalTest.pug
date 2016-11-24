@@ -3,7 +3,7 @@ extends globalMixins
 block html
   - var mainObject = 'principalTest'
   md-content
-    h1 Teste principal
+    h1 Tipos de testes
 
     <!-- Button trigger modal -->
     div
@@ -33,7 +33,7 @@ block html
 
         md-dialog-content(layout-padding)
           +materialInput('cod_teste_anac','Codigo do teste ANAC','item.cod_teste_anac','number')
-          +materialInput('den_teste','Descrição','item.den_teste','text')
-          +materialInput('val_pontuacao_maxima','Pontuação no teste','item.val_pontuacao_maxima','number')
+          +materialInput('den_teste','Nome','item.den_teste','text')
+          +materialInput('val_pontuacao_maxima','Pontuação maxima','item.val_pontuacao_maxima','number')(min="1")
       //- Edit | Add
       +dialogFooter('item')

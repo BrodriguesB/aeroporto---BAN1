@@ -66,7 +66,7 @@
             id_teste_principal numeric(11),
             cod_teste_anac character varying(50),
             den_teste character varying(50),
-            val_pontuacao_maxima numeric(3,2),
+            val_pontuacao_maxima numeric(4),
             primary key (id_teste_principal)
         )`,
         `create table teste_aviao(
@@ -75,7 +75,7 @@
             id_aviao numeric(11),
             dat_teste date,
             id_funcionario numeric(11),
-            val_pontuacao_aviao numeric(3,2),
+            val_pontuacao_aviao numeric(4),
             primary key (id_teste_aviao),
             foreign key (id_teste_principal) references teste_principal(id_teste_principal),
             foreign key (id_aviao) references aviao(id_aviao),

@@ -24,7 +24,7 @@ block html
                 md-list-item: p Id avião: {{#{mainObject}.id_aviao}}
                 md-list-item: p Data do teste: {{#{mainObject}.dat_teste | date : 'dd/MM/yyyy'}}
                 +foreignListInfo('Tester :',mainObject + '.id_funcionario')
-                md-list-item: p Pontuação : {{#{mainObject}.val_pontuacao_aviao}}
+                md-list-item: p Pontuação : {{#{mainObject}.val_pontuacao_aviao + '/' + requestedsArr[#{mainObject}.id_teste_principal+'maxPoint'] }}
             +cardFooter(mainObject)
 
   script(type="text/ng-template" id="dialog1.tmpl.html")
@@ -37,8 +37,8 @@ block html
         md-dialog-content(layout-padding)
           +foreignSelect('Teste principal','item.id_teste_principal','id_teste_principal','principalTest','principalTest.id_teste_principal','principalTest.den_teste')
           +foreignSelect('Avião','item.id_aviao','id_aviao','plane','plane.id_aviao','searchValueForGiven(planesModels,plane.id_modelo_aviao,"cod_modelo_aviao")+" - "+plane.id_aviao ')
-          +materialDatePicker('dat_teste','Pontuação no teste','item.dat_teste')
+          +materialDatePicker('dat_teste','Data do teste','item.dat_teste')
           +foreignSelect('Realizado por','item.id_funcionario','id_funcionario','employee','employee.num_matricula','employee.nom_funcionario')
-          +materialInput('val_pontuacao_aviao','Pontuação','item.val_pontuacao_aviao','number')(max="9",min="0")
+          +materialInput('val_pontuacao_aviao','Pontuação','item.val_pontuacao_aviao','number')(max="{{searchValueForGiven(principalTests,item.id_teste_principal,'val_pontuacao_maxima')}}",min="0")
 
       +dialogFooter('item')

@@ -57,6 +57,8 @@
                 if(edit) {
                     answer = getDiff(answer, edit);
                     console.log('answer', answer);
+
+                    console.log($scope);
                     //If there's no diff.
                     if(!Object.keys(answer).length) return;
                 }
@@ -98,6 +100,7 @@
                 response.data.forEach((x)=>{
                     getSpecificToScope('api/funcionario/single/nom_funcionario/num_matricula/' + x.id_funcionario, x.id_funcionario);
                     getSpecificToScope('api/teste_principal/single/den_teste/id_teste_principal/' + x.id_teste_principal, x.id_teste_principal);
+                    getSpecificToScope('api/teste_principal/single/val_pontuacao_maxima/id_teste_principal/' + x.id_teste_principal, x.id_teste_principal + 'maxPoint');
                 });
             });
         }

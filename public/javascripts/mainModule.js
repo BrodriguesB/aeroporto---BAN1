@@ -166,7 +166,7 @@
         $scope.requestedsArr = {};
         /** Put a requested {Any} on the requestedsArrays named as the provided key.*/
         function getSpecificToScope(apiUrl,keyForRequestedsArr){
-            console.log($scope.requestedsArr);
+            console.log("Specific to scope", $scope.requestedsArr);
 
             if($scope.requestedsArr[keyForRequestedsArr]){
                 //Only works after request is done.
