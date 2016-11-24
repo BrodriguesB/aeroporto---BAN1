@@ -91,13 +91,17 @@
                 console.log($scope[pluralViewKey]);
 
                 response.data.forEach((x)=>{
-                    //getSpecificToScope('api/funcionario/single/nom_funcionario/num_matricula/'+x.id_funcionario,x.id_funcionario);
-                    //getSpecificToScope('api/modelo_aviao/single/cod_modelo_aviao/id_modelo_aviao/'+x.id_modelo,x.id_modelo);
+                    getSpecificToScope('api/teste_aviao/count/id_teste_principal/' + x.id_teste_principal, x.id_teste_principal + 'counter');
                 });
             });
         }
 
         $scope.delete = function (registry){
+            if ($scope.requestedsArr[registry.id_teste_principal + 'counter'] != 0) {
+                showSimpleToast("Não é possível deletar o tipo de teste pois há testes realizados com ele");
+                return;
+            }
+
             console.debug(registry);
             $http.delete(apiBaseUrl+pKey+'/'+registry[pKey])
                 .success(function () {

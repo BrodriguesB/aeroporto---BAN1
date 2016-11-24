@@ -9,7 +9,7 @@ block html
       md-button(ng-click="showAdvanced($event)") Adicionar
 
     md-content.md-padding(layout-xs="column", layout="column")
-      md-grid-list(md-cols-gt-md="5", md-cols="3", md-cols-md="3", md-row-height-gt-md="8:10", md-row-height="8:10", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
+      md-grid-list(md-cols-gt-md="4", md-cols="3", md-cols-md="3", md-row-height-gt-md="8:10", md-row-height="8:10", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
         //- List
         md-grid-tile(ng-repeat="" + mainObject + " in " + mainObject + "s")
           md-card(flex)
@@ -18,7 +18,7 @@ block html
                 span.md-headline Modelo - {{requestedsArr[plane.id_modelo_aviao]}}
             md-card-content
               md-list
-                md-list-item: p  ID : {{plane.id_aviao}}
+                md-list-item: p  Id : {{plane.id_aviao}}
                 +foreignListCounter('Testes registrados: ',mainObject + '.id_aviao')
             +cardFooter(mainObject)
 

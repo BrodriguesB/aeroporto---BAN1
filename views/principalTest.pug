@@ -23,6 +23,7 @@ block html
                 md-list-item
                   p Descrição: {{#{mainObject}.den_teste}}
                 md-list-item: p Valor maximo : {{#{mainObject}.val_pontuacao_maxima}}
+                +foreignListCounter('Nº de testes realizados: ',mainObject + '.id_teste_principal')
             +cardFooter('principalTest')
 
   script(type="text/ng-template" id="dialog1.tmpl.html")
