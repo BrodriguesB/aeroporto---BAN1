@@ -26,15 +26,15 @@ mixin dialogTitle(idk,title,model,inputType)
 mixin materialInput(idk,title,model,inputType)
   md-input-container.md-block(flex-gt-xs)
     label(for=idk)= title
-    input.md-input(id=idk, ng-model=model, aria-invalid="false",name=idk,type=inputType, require)
+    input.md-input(id=idk, ng-model=model, aria-invalid="false",name=idk,type=inputType,max!=attributes.max,min!=attributes.min, require)
 
 mixin foreignListCounter(title,key)
-  md-list-item(ng-if="requestedsArr[key+'counter']!='0'")
-    p title {{requestedsArr[key+'counter']}}.
+  md-list-item(ng-if="requestedsArr[" + key + "'counter']!='0'")
+    p=title + "{{requestedsArr[" + key + "+'counter']}}"
 
 mixin foreignListInfo(title,key)
-  md-list-item(ng-if="requestedsArr[key]")
-    p title {{requestedsArr[key]}}.
+  md-list-item(ng-if="requestedsArr[" + key + "]")
+    p=title + "{{requestedsArr[" + key + "]}}"
 
 mixin foreignSelect(title,model,key,foreignObject,foreignKey,foreignDescription)
   md-input-container.md-block(flex)

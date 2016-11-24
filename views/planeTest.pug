@@ -10,7 +10,7 @@ block html
       md-button(ng-click="showAdvanced($event)") Adicionar
 
     md-content.md-padding(layout-xs="column", layout="column")
-      md-grid-list(md-cols-gt-md="5", md-cols="3", md-cols-md="3", md-row-height-gt-md="8:11", md-row-height="8:11", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
+      md-grid-list(md-cols-gt-md="5", md-cols="3", md-cols-md="3", md-row-height-gt-md="8:13", md-row-height="8:13", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
         //- List
         md-grid-tile(ng-repeat=""+mainObject+" in "+mainObject+"s")
           md-card(flex)
@@ -23,7 +23,7 @@ block html
                 md-list-item: p Id teste principal : {{#{mainObject}.id_teste_principal}}
                 md-list-item: p Id avião: {{#{mainObject}.id_aviao}}
                 md-list-item: p Data do teste: {{#{mainObject}.dat_teste | date : 'dd/MM/yyyy'}}
-                +foreignListInfo('Funcionario que testou :',mainObject + '.id_funcionario')
+                +foreignListInfo('Tester :',mainObject + '.id_funcionario')
                 md-list-item: p Pontuação : {{#{mainObject}.val_pontuacao_aviao}}
             +cardFooter(mainObject)
 
@@ -39,6 +39,6 @@ block html
           +foreignSelect('Avião','item.id_aviao','id_aviao','plane','plane.id_aviao','searchValueForGiven(planesModels,plane.id_modelo_aviao,"cod_modelo_aviao")+" - "+plane.id_aviao ')
           +materialDatePicker('dat_teste','Pontuação no teste','item.dat_teste')
           +foreignSelect('Realizado por','item.id_funcionario','id_funcionario','employee','employee.num_matricula','employee.nom_funcionario')
-          +materialInput('val_pontuacao_aviao','Pontuação','item.val_pontuacao_aviao','number')(max="9")
+          +materialInput('val_pontuacao_aviao','Pontuação','item.val_pontuacao_aviao','number')(max="9",min="0")
 
       +dialogFooter('item')
