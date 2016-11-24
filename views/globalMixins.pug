@@ -30,7 +30,7 @@ mixin materialInput(idk,title,model,inputType)
     input.md-input(id=idk, ng-model=model, aria-invalid="false",name=idk,type=inputType,max!=attributes.max,min!=attributes.min, require)
 
 mixin foreignListCounter(title,key)
-  md-list-item(ng-if="requestedsArr[" + key + "'counter']!='0'")
+  md-list-item(ng-if="requestedsArr[" + key + "+'counter']!='0'")
     p=title + "{{requestedsArr[" + key + "+'counter']}}"
 
 mixin foreignListInfo(title,key)

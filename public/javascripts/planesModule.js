@@ -86,11 +86,16 @@
 
                 response.data.forEach((x)=>{
                     getSpecificToScope('api/modelo_aviao/single/cod_modelo_aviao/id_modelo_aviao/'+x.id_modelo_aviao,x.id_modelo_aviao);
+                    getSpecificToScope('api/teste_aviao/count/id_aviao/' + x.id_aviao, x.id_aviao + 'counter');
                 });
             });
         }
 
-        $scope.deletePlane = function (plane){
+        $scope.delete = function (plane) {
+            if ($scope.requestedsArr[plane.id_aviao + 'counter'] != 0) {
+                showSimpleToast("Não é possível deletar o avião pois há testes registrados para ele.");
+                return;
+            }
             console.debug(plane.id_aviao);
             $http.delete(apiBaseUrl+'id_aviao/'+plane.id_aviao)
                 .success(function (response) {
