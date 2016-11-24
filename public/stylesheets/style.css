@@ -52,3 +52,6 @@ tbody tr td{
   border-bottom: 1px solid #dddddd;
 }
 
+.md-datepicker-calendar {
+  max-width: 340px;
+}

@@ -6,7 +6,7 @@
      */
 
     /*global angular*/
-    angular.module('MainApp',['ngRoute','ngMessages','ngMaterial','OfficeModule','EmployeeModule','PlanesModelsModule','UnionModule','PlanesModule','SkillsModule','principalTestModule','principalTestModule']);
+    angular.module('MainApp', ['ngRoute', 'ngMessages', 'ngMaterial', 'OfficeModule', 'EmployeeModule', 'PlanesModelsModule', 'UnionModule', 'PlanesModule', 'SkillsModule', 'principalTestModule', 'planeTestModule']);
 
 
     angular.module('MainApp').config(function($routeProvider, $locationProvider) {
@@ -46,7 +46,7 @@
             })
             .when('/teste_aviao', {
                 templateUrl: '/teste_aviao',
-                controller: 'principalTestController',
+                controller: 'planeTestController',
             })
 
     });
@@ -97,7 +97,12 @@
 
             $scope.getFrom = function (url,keyForScope){
                 $http.get(url).then(function (response) {
+                    response.data.forEach((x)=> {
+                        tryParseNtoN(x);
+                    });
                     $scope[keyForScope] = response.data;
+                    console.log(keyForScope);
+                    console.log($scope[keyForScope]);
                 });
             };
 
@@ -110,12 +115,30 @@
                 }
             }
 
+
+            $scope.searchValueForGiven = function (obj, value, key) {
+                if (!obj || !key || !value) return;
+                let found;
+                obj.forEach((x)=> {
+                    Object.keys(x).forEach((y)=> {
+                        if (x[y] == value) {
+                            found = x[key];
+                        }
+                    });
+                });
+                return found;
+
+            }
+
         }
 
 
         //Dunno if it works..but should (not covering floats, im too lazy)
         function tryParseNtoN(obj){
             Object.keys(obj).map((x)=>{
+                if (obj[x] instanceof Date) {
+                    return obj[x];
+                }
                 try{
                     obj[x] = isNaN(Number(obj[x])) ? obj[x] :Number(obj[x]);
                 } catch (e){
@@ -151,7 +174,8 @@
             }
              $http.get(apiUrl).then(function (response) {
                 $scope.requestedsArr[keyForRequestedsArr] = response.data;
-            });
+
+             });
         }
 
         //FIXME: move to global scope.

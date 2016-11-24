@@ -3,7 +3,7 @@ extends globalMixins
 block html
   - var mainObject = 'principalTest'
   md-content
-    h1 Sindicatos
+    h1 Teste principal
 
     <!-- Button trigger modal -->
     div
@@ -19,15 +19,15 @@ block html
                 span.md-headline ID {{principalTest.id_teste_principal}}
             md-card-content
               md-list
-                md-list-item: p Test anac : {{#{mainObject}.cod_teste_anac}}
-                md-list-item: p Test anac : {{#{mainObject}.den_teste}}
-                md-list-item: p Test anac : {{#{mainObject}.val_pontuacao_maxima}}
+                md-list-item: p Codigo do teste : {{#{mainObject}.cod_teste_anac}}
+                md-list-item
+                  p Descrição: {{#{mainObject}.den_teste}}
+                md-list-item: p Valor maximo : {{#{mainObject}.val_pontuacao_maxima}}
             +cardFooter('principalTest')
 
   script(type="text/ng-template" id="dialog1.tmpl.html")
     md-dialog(layout-padding="",style="min-width:500px;")
       form(ng-cloak,name="form")
-        //- Edit | Add
 
         +dialogTitle("id_teste_principal","Id","item.id_teste_principal","number")
 
@@ -35,4 +35,5 @@ block html
           +materialInput('cod_teste_anac','Codigo do teste ANAC','item.cod_teste_anac','number')
           +materialInput('den_teste','Descrição','item.den_teste','text')
           +materialInput('val_pontuacao_maxima','Pontuação no teste','item.val_pontuacao_maxima','number')
+      //- Edit | Add
       +dialogFooter('item')

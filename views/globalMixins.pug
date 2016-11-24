@@ -13,20 +13,37 @@ mixin dialogFooter(editItem)
     md-button(ng-click="answer("+editItem+")")
       md-icon.material-icons.md-ligh.md-avatar-icon done
 
-mixin dialogTitle(idk,title,model,inputtype)
+mixin dialogTitle(idk,title,model,inputType)
   md-title
-    h3(layout-gt-xs="row")
+    h4(layout-gt-xs="row")
       md-input-container.md-block(flex-gt-sm)
-        label(for!=idk)= title
-        input.md-input(id!=idk,ng-model!=model, aria-invalid="true",name!=idk,type!=inputtype,disabled)
+        label(for=idk)= title
+        input.md-input(id=idk,ng-model=model, aria-invalid="true",name=idk,type=inputType,disabled)
       md-input-container
         md-button.md-icon-button.md-primary(aria-label!=title,ng-click="cancel()",style="display:inline-block;top: -35px;")
           md-icon.material-icons close
 
-mixin materialInput(idk,title,model,inputtype)
+mixin materialInput(idk,title,model,inputType)
   md-input-container.md-block(flex-gt-xs)
-    label(for!=idk)= title
-    input.md-input(id!=idk, ng-model!=model, aria-invalid="false",name!=idk,type!=inputtype, require)
+    label(for=idk)= title
+    input.md-input(id=idk, ng-model=model, aria-invalid="false",name=idk,type=inputType, require)
 
+mixin foreignListCounter(title,key)
+  md-list-item(ng-if="requestedsArr[key+'counter']!='0'")
+    p title {{requestedsArr[key+'counter']}}.
 
+mixin foreignListInfo(title,key)
+  md-list-item(ng-if="requestedsArr[key]")
+    p title {{requestedsArr[key]}}.
+
+mixin foreignSelect(title,model,key,foreignObject,foreignKey,foreignDescription)
+  md-input-container.md-block(flex)
+    label=title
+    md-select.md-no-underline(id=key,ng-value=model,ng-model=model, style="min-width: 200px;",ng-required="true")
+      md-option(ng-repeat=foreignObject + " in " + foreignObject + "s", ng-value=foreignKey ,ng-selected=foreignKey + "==" + model)= "{{" + foreignDescription + "}}"
+
+mixin materialDatePicker(idk,title,model)
+  md-input-container.md-block(flex-gt-sm)
+    label(for=idk)=title
+    md-datepicker(id=idk,ng-model=model, aria-invalid="true",name=idk)
 block html

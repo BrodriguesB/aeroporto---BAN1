@@ -3,40 +3,42 @@ extends globalMixins
 block html
   - var mainObject = 'planeTest'
   md-content
-    h1 Sindicatos
+    h1 Teste avião
 
     <!-- Button trigger modal -->
     div
       md-button(ng-click="showAdvanced($event)") Adicionar
 
     md-content.md-padding(layout-xs="column", layout="column")
-      md-grid-list(md-cols-gt-md="5", md-cols="3", md-cols-md="3", md-row-height-gt-md="8:10", md-row-height="8:10", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
+      md-grid-list(md-cols-gt-md="5", md-cols="3", md-cols-md="3", md-row-height-gt-md="8:11", md-row-height="8:11", md-gutter-gt-md="16px", md-gutter-md="8px", md-gutter="4px")
         //- List
         md-grid-tile(ng-repeat=""+mainObject+" in "+mainObject+"s")
           md-card(flex)
             md-card-title
               md-card-title-text
-                span.md-headline ID {{principalTest.id_teste_principal}}
+                span.md-headline ID {{#{mainObject}.id_teste_principal}}
             md-card-content
               md-list
-                md-list-item: p Test anac : {{#{mainObject}.id_teste_aviao}}
-                md-list-item: p Test anac : {{#{mainObject}.id_teste_principal}}
-                md-list-item: p Test anac : {{#{mainObject}.id_aviao}}
-                md-list-item: p Test anac : {{#{mainObject}.dat_teste}}
-                md-list-item: p Test anac : {{#{mainObject}.id_funcionario}}
-                md-list-item: p Test anac : {{#{mainObject}.val_pontuacao_aviao}}
-            +cardFooter('principalTest')
+                md-list-item: p Id teste aviao : {{#{mainObject}.id_teste_aviao}}
+                md-list-item: p Id teste principal : {{#{mainObject}.id_teste_principal}}
+                md-list-item: p Id avião: {{#{mainObject}.id_aviao}}
+                md-list-item: p Data do teste: {{#{mainObject}.dat_teste | date : 'dd/MM/yyyy'}}
+                +foreignListInfo('Funcionario que testou :',mainObject + '.id_funcionario')
+                md-list-item: p Pontuação : {{#{mainObject}.val_pontuacao_aviao}}
+            +cardFooter(mainObject)
 
   script(type="text/ng-template" id="dialog1.tmpl.html")
     md-dialog(layout-padding="",style="min-width:500px;")
       form(ng-cloak,name="form")
         //- Edit | Add
 
-        +dialogTitle("id_teste_aviao","Id","item.id_teste_principal","number")
+        +dialogTitle("id_teste_aviao","Id","item.id_teste_aviao","number")
 
         md-dialog-content(layout-padding)
-          +materialInput('id_teste_principal','Codigo do teste ANAC','item.cod_teste_anac','number')
-          +materialInput('id_aviao','Descrição','item.den_teste','text')
-          +materialInput('dat_teste','Pontuação no teste','item.val_pontuacao_maxima','number')
-          +materialInput('id_funcionario','Pontuação no teste','item.val_pontuacao_maxima','number')
+          +foreignSelect('Teste principal','item.id_teste_principal','id_teste_principal','principalTest','principalTest.id_teste_principal','principalTest.den_teste')
+          +foreignSelect('Avião','item.id_aviao','id_aviao','plane','plane.id_aviao','searchValueForGiven(planesModels,plane.id_modelo_aviao,"cod_modelo_aviao")+" - "+plane.id_aviao ')
+          +materialDatePicker('dat_teste','Pontuação no teste','item.dat_teste')
+          +foreignSelect('Realizado por','item.id_funcionario','id_funcionario','employee','employee.num_matricula','employee.nom_funcionario')
+          +materialInput('val_pontuacao_aviao','Pontuação','item.val_pontuacao_aviao','number')(max="9")
+
       +dialogFooter('item')

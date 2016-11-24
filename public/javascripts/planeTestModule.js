@@ -7,7 +7,7 @@
     /*global angular*/
 
     const moduleName="planeTestModule";
-    const pluralViewKey="planeTest";
+    const pluralViewKey = "planeTests";
     const controllerName="planeTestController";
     const pKey="id_teste_aviao";
     const apiBaseUrl = '/api/teste_aviao/';
@@ -27,11 +27,14 @@
             if(edit){
                 //Transform to number FIXME: numbers should come as numbers from server.
                 tryParseNtoN(edit);
+
+                edit.dat_teste = new Date(edit.dat_teste);
+
                 $scope.currentManagedCard = edit;
             } else {
                 $scope.currentManagedCard = {};
                 $scope.currentManagedCard[pKey] = getDateInIdForm();
-                console.log($scope.currentManagedCard[pKey])
+                console.log(pKey, $scope.currentManagedCard[pKey])
             }
             $mdDialog.show({
                 controller: DialogController,
@@ -43,7 +46,9 @@
                 locals: {
                     item: $scope.currentManagedCard,
                     requestItems: [
-                        ['api/modelo_aviao/','planeModels'],
+                        ['api/aviao/', 'planes'],
+                        ['api/modelo_aviao/', 'planesModels'],
+                        ['api/teste_principal', 'principalTests'],
                         ['api/funcionario','employees']
                     ]
                 },
@@ -51,7 +56,7 @@
                 let id= answer[pKey];
                 if(edit) {
                     answer = getDiff(answer, edit);
-                    console.log(answer);
+                    console.log('answer', answer);
                     //If there's no diff.
                     if(!Object.keys(answer).length) return;
                 }
@@ -81,17 +86,17 @@
                         });
                 }
             }, function() {
-                console.log('You cancelled the dialog.');
             });
         };
 
         function getAll(){
             $http.get(apiBaseUrl).then(function (response) {
+                tryParseNtoN(response.data);
                 $scope[pluralViewKey] = response.data;
-                console.log($scope[pluralViewKey]);
+                console.log("pluralViewKey", $scope[pluralViewKey]);
 
                 response.data.forEach((x)=>{
-                    //getSpecificToScope('api/funcionario/single/nom_funcionario/num_matricula/'+x.id_funcionario,x.id_funcionario);
+                    getSpecificToScope('api/funcionario/single/nom_funcionario/num_matricula/' + x.id_funcionario, x.id_funcionario);
                     //getSpecificToScope('api/modelo_aviao/single/cod_modelo_aviao/id_modelo_aviao/'+x.id_modelo,x.id_modelo);
                 });
             });
