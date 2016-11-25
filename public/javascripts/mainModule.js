@@ -6,14 +6,31 @@
      */
 
     /*global angular*/
-    angular.module('MainApp', ['ngRoute', 'ngMessages', 'ngMaterial', 'OfficeModule', 'EmployeeModule', 'PlanesModelsModule', 'UnionModule', 'PlanesModule', 'SkillsModule', 'principalTestModule', 'planeTestModule']);
+    angular.module('MainApp', [
+        /* Angular modules */
+        'ngRoute',
+
+        /*Angular material modules*/
+        'ngMessages',
+        'ngMaterial',
+
+        /* Main app modules */
+        'OfficeModule',
+        'EmployeeModule',
+        'PlanesModelsModule',
+        'UnionModule',
+        'PlanesModule',
+        'SkillsModule',
+        'principalTestModule',
+        'planeTestModule'
+    ]);
 
 
-    angular.module('MainApp').config(function($routeProvider, $locationProvider) {
+    angular.module('MainApp').config(function ($routeProvider) {
         $routeProvider
             .when('/', {
-                    templateUrl: '/index',
-                    controller: 'planesModelsController',
+                templateUrl: '/index',
+                controller: 'planesModelsController',
                 //TODO: CHANGE THIS TO A PERSONAL QUERY PAGE
             })
             .when('/cargo', {
@@ -82,16 +99,19 @@
             };
 
             $scope.answer = function(answer) {
+                let shouldNotAnswerNow = false;
                 if(!$scope.form.$valid){
                     //So, there's A FUCKING PROBLEM ON FUCKING MD-SELECT, WHERE IT DOESNT SET THE FUCKING MODEL VALUE(ng-options dont exist :D).
                     if($scope.form.$error.required){
                         $scope.form.$error.required.forEach((x)=>{
                             if(x.$viewValue==undefined){
-                                return;
+                                shouldNotAnswerNow = false;
                             }
                         });
                     }
                 }
+
+                if (shouldNotAnswerNow) return;
 
                 tryParseNtoN(answer);
                 $mdDialog.hide(answer);

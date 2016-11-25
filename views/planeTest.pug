@@ -30,15 +30,40 @@ block html
   script(type="text/ng-template" id="dialog1.tmpl.html")
     md-dialog(layout-padding="",style="min-width:500px;")
       form(ng-cloak,name="form")
-        //- Edit | Add
 
         +dialogTitle("id_teste_aviao","Id","item.id_teste_aviao","number")
 
         md-dialog-content(layout-padding,style="padding-top:10px")
-          +foreignSelectDisabledOnEdit('Teste principal','item.id_teste_principal','id_teste_principal','principalTest','principalTest.id_teste_principal','principalTest.den_teste')()
-          +foreignSelect('Avião','item.id_aviao','id_aviao','plane','plane.id_aviao','searchValueForGiven(planesModels,plane.id_modelo_aviao,"cod_modelo_aviao")+" - "+plane.id_aviao ')
-          +materialDatePicker('dat_teste','Data do teste','item.dat_teste')
-          +foreignSelect('Realizado por','item.id_funcionario','id_funcionario','employee','employee.num_matricula','employee.nom_funcionario')
-          +materialInput('val_pontuacao_aviao','Pontuação','item.val_pontuacao_aviao','number')(max="{{searchValueForGiven(principalTests,item.id_teste_principal,'val_pontuacao_maxima')}}",min="0")
+          //- Disabled, some data inconsistence in the database (on  change should do a check on the max value for the new id)
+          +foreignSelectDisabledOnEdit('Teste principal',
+          'item.id_teste_principal',
+          'id_teste_principal',
+          'principalTest',
+          'principalTest.id_teste_principal',
+          'principalTest.den_teste')
 
+          //- Plane select
+          +foreignSelect('Avião',
+          'item.id_aviao',
+          'id_aviao',
+          'plane',
+          'plane.id_aviao',
+          'searchValueForGiven(planesModels,plane.id_modelo_aviao,"cod_modelo_aviao")+" - "+plane.id_aviao ')
+
+          //- Date picker for test date
+          +materialDatePicker('dat_teste','Data do teste','item.dat_teste')
+
+          //- Employee
+          +foreignSelect('Realizado por',
+          'item.id_funcionario',
+          'id_funcionario',
+          'employee',
+          'employee.num_matricula',
+          'employee.nom_funcionario')
+
+          +materialInput('val_pontuacao_aviao',
+          'Pontuação',
+          'item.val_pontuacao_aviao',
+          'number')(max="{{searchValueForGiven(principalTests,item.id_teste_principal,'val_pontuacao_maxima')}}",min="0")
+      //- Confirm
       +dialogFooter('item')
