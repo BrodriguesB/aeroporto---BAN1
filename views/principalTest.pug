@@ -30,11 +30,11 @@ block html
     md-dialog(layout-padding="",style="min-width:500px;")
       form(ng-cloak,name="form")
 
-        +dialogTitle("id_teste_principal","Id","item.id_teste_principal","number")
+        +dialogTitle("id_teste_principal","Id","item.id_teste_principal")(type="number", disabled, required)
 
         md-dialog-content(layout-padding)
-          +materialInput('cod_teste_anac','Codigo do teste ANAC','item.cod_teste_anac','number')
-          +materialInput('den_teste','Nome','item.den_teste','text')
-          +materialInput('val_pontuacao_maxima','Pontuação maxima','item.val_pontuacao_maxima','number')(min="1")
+          +materialInput('cod_teste_anac','Codigo do teste ANAC','item.cod_teste_anac')(type="number",required)
+          +materialInput('den_teste','Nome','item.den_teste')(type="text",required)
+          +materialInput('val_pontuacao_maxima','Pontuação maxima','item.val_pontuacao_maxima')(type="number", min="1",required)
       //- Edit | Add
       +dialogFooter('item')

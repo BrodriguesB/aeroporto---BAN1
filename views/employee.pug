@@ -1,84 +1,84 @@
-md-content
-  h1 Empregados
+extends globalMixins
 
-  <!-- Button trigger modal -->
-  div
-    md-button(ng-click="showAdvanced($event)") Adicionar
+block html
+  - var mainObject = 'employee'
+  md-content
+    h1 Empregados
 
-  md-content.md-padding(layout-xs="column", layout="column")
-    md-grid-list(md-cols="1", md-cols-sm="2", md-cols-md="3", md-cols-gt-md="4", md-row-height-gt-md="4:6", md-row-height="5:7", md-gutter="8px" md-gutter-gt-sm="4px")
-      //- List
-      md-grid-tile(ng-repeat="employee in employees")
-        md-card(flex)
-          md-card-title
-            md-card-title-text
-              span.md-headline Matricula - {{employee.num_matricula}}
-          md-card-content
-            md-list
-              md-list-item
-                p Nome : {{employee.nom_funcionario}}
-              md-list-item
-                p Endereco : {{employee.den_endereco}}
-              md-list-item
-                p Telefone : {{employee.num_telefone}}
-              md-list-item
-                p Salario : {{employee.val_salario}}
-              md-list-item
-                p Cargo : {{requestedsArr[employee.id_cargo]}}
-              md-list-item
-                p Membro sindicato : {{employee.num_membro_sindicato}}
-              md-list-item
-                p Sindicato : {{requestedsArr[employee.id_sindicato]}}
-              md-list-item(ng-if="requestedsArr[employee.num_matricula+'counter']!='0'")
-                p Especialista em {{requestedsArr[employee.num_matricula+'counter']}} modelos.
-          md-card-actions(layout="row", layout-align="end center")
-            md-button(ng-click="showAdvanced($event,employee)")
-              md-icon.material-icons.md-ligh.md-avatar-icon edit
-            md-button(ng-click="delete(employee)")
-              md-icon.material-icons.md-ligh.md-avatar-icon close
-script(type="text/ng-template" id="dialog1.tmpl.html")
-  md-dialog(layout-padding="",style="min-width:500px;")
-    form(data-ng-cloak,name="form")
-      //- Edit | Add
-      md-title
-        h4(data-layout-gt-xs="row")
-          md-input-container.md-block(flex="90")
-            label(for="num_matricula") Matrícula
-            input#num_matricula.md-input(data-ng-model="item.num_matricula",type="number" aria-invalid="false",name="num_matricula",required, disabled)
-          md-button.md-icon-button(aria-label="Fechar",ng-click="cancel()" flex=33,style="top: -15px;")
-            md-icon.material-icons close
-      md-dialog-content(layout-padding)
-        md-input-container.md-block(flex-gt-sm)
-          label(for="nom_funcionario") Nome
-          input#nom_funcionario.md-input(data-ng-model="item.nom_funcionario", aria-invalid="true",name="nom_funcionario" ,required,data-md-autofocus)
+    <!-- Button trigger modal -->
+    div
+      md-button(ng-click="showAdvanced($event)") Adicionar
 
-        md-input-container.md-block(flex-gt-sm)
-          label(for="den_endereco") Endereço
-          input#den_endereco.md-input(data-ng-model="item.den_endereco", aria-invalid="true",name="den_endereco" ,md-maxlength="50",required)
+    md-content.md-padding(layout-xs="column", layout="column")
+      md-grid-list(md-cols="1", md-cols-sm="2", md-cols-md="3", md-cols-gt-md="4", md-row-height-gt-md="4:6", md-row-height="5:7", md-gutter="8px" md-gutter-gt-sm="4px")
+        //- List
+        md-grid-tile(ng-repeat="employee in employees")
+          md-card(flex)
+            +cardTitle('Matricula - {{'+ mainObject +'.num_matricula}}')
 
-        md-input-container.md-block(flex-gt-sm)
-          label(for="num_telefone") Telefone
-          input#num_telefone.md-input(data-ng-model="item.num_telefone", aria-invalid="true",name="num_telefone", type="tel", required)
+            md-card-content
+              md-list
 
-        md-input-container.md-block(flex-gt-sm)
-          label(for="val_salario") Salario
-          input#val_salario.md-input(data-ng-model="item.val_salario", aria-invalid="true",name="val_salario", type="number" , step="100", required)
+                +cardItem('Nome     : {{'+ mainObject +'.nom_funcionario}}')
 
-        md-input-container.md-block(flex-gt-sm)
-          label Cargo
-          md-select#id_cargo.md-no-underline(ng-value="item.id_cargo",ng-model="item.id_cargo", style="min-width: 200px;" ,ng-required="true")
-            md-option(ng-value="office.id_cargo",ng-repeat="office in offices",ng-selected="item.id_cargo==office.id_cargo" ) {{office.den_cargo}}
+                +cardItem('Endereco : {{'+ mainObject +'.den_endereco}}')
 
-        md-input-container.md-block(flex-gt-sm)
-          label(for="num_membro_sindicato") Num Membro sindicato
-          input#num_membro_sindicato(data-ng-model="item.num_membro_sindicato", aria-invalid="true",name="num_membro_sindicato" ,type="number" ,required)
+                +cardItem('Telefone : {{'+ mainObject +'.num_telefone}}')
 
-        md-input-container.md-block(flex-gt-sm)
-          label Sindicato
-          md-select#id_sindicato.md-no-underline(ng-value="item.id_sindicato",ng-model="item.id_sindicato", style="min-width: 200px;",ng-required="true")
-            md-option(ng-repeat="union in unions", ng-value="union.id_sindicato",ng-selected="item.id_sindicato==union.id_sindicato") {{union.den_sindicato}}
+                +cardItem('Salario  : {{'+ mainObject +'.val_salario}}')
 
+                +foreignListInfo('Cargo : ',mainObject+'.id_cargo')
 
-      md-dialog-actions(layout="row", layout-align="end center")
-        md-button(type="submit" ng-click="answer(item)")
-          md-icon.material-icons.md-ligh.md-avatar-icon done
+                +cardItem('Membro sindicato  : {{' + mainObject + '.num_membro_sindicato}}')
+
+                +foreignListInfo('Sindicato : ',mainObject + '.id_sindicato')
+
+                +foreignListCounter('Especialista em ',mainObject+'.num_matricula','modelos')
+
+            +cardFooter(mainObject)
+
+  script(type="text/ng-template" id="dialog1.tmpl.html")
+    md-dialog(layout-padding="",style="min-width:500px;")
+      form(data-ng-cloak,name="form")
+        //- Edit | Add
+        +dialogTitle("num_matricula","Matrícula","item.num_matricula")(type="number", disabled, required)
+
+        md-dialog-content(layout-padding)
+
+          //- Employee name
+          +materialInput('nom_funcionario','Nome','item.nom_funcionario')(type="text", required)
+
+          //- Address
+          +materialInput('den_endereco','Endereço','item.den_endereco')(type="text", required)
+
+          //- Phone number
+          +materialInput('num_telefone','Telefone','item.num_telefone')(type="tel", required)
+
+          //- Salary
+          +materialInput('val_salario','Salario','item.val_salario')(type="number", step="100",required)
+
+          //- Office
+          +foreignSelect(
+            'Cargo',
+            'item.id_cargo',
+            'id_cargo',
+            'office',
+            'office.id_cargo',
+            'office.den_cargo'
+          )
+
+          //- Union number
+          +materialInput('num_membro_sindicato','Num Membro sindicato','item.num_membro_sindicato')(type="number",required)
+
+          //Union id
+          +foreignSelect(
+            'Sindicato',
+            'item.id_sindicato',
+            'id_sindicato',
+            'union',
+            'union.id_sindicato',
+            'union.den_sindicato'
+          )
+
+        //- Confirm
+        +dialogFooter('item')

@@ -1,7 +1,15 @@
-<!--suppress ALL -->
-<!--suppress HtmlUnknownAttribute -->
-
 //- Pug mixins
+
+//- Cards mixins
+mixin cardTitle(value)
+  md-card-title
+    md-card-title-text
+      span.md-headline=value
+
+mixin cardItem(value)
+  md-list-item
+    p=value
+
 mixin cardFooter(angularVariable)
   md-card-actions(layout="row", layout-align="end center")
     md-button(ng-click="showAdvanced($event," + angularVariable + ")")
@@ -9,6 +17,7 @@ mixin cardFooter(angularVariable)
     md-button(ng-click="delete(" + angularVariable + ")")
       md-icon.material-icons.md-ligh.md-avatar-icon close
 
+//- Dialog mixins
 mixin dialogFooter(editItem)
   md-dialog-actions(layout="row", layout-align="end center")
     //-
@@ -17,57 +26,65 @@ mixin dialogFooter(editItem)
     md-button(ng-click="answer(" + editItem + ")")
       md-icon.material-icons.md-ligh.md-avatar-icon done
 
-mixin dialogTitle(idk,title,model,inputType)
+mixin dialogTitle(idk,title,model)
   md-title
     h4(layout-gt-xs="row")
       md-input-container.md-block(flex-gt-sm)
         label(for=idk)= title
-        input.md-input(id=idk, ng-model=model, aria-invalid="true", name=idk, type=inputType,disabled)
+        input.md-input(
+          id=idk,
+          ng-model=model,
+          aria-invalid="true",
+          name=idk,
+        )&attributes(attributes)
       md-input-container
         md-button.md-icon-button.md-primary(aria-label!=title, ng-click="cancel()", style="display:inline-block;top: -35px;")
           md-icon.material-icons close
 
-mixin materialInput(idk, title, model, inputType)
+mixin materialInput(idk, title, model)
   md-input-container.md-block(flex-gt-xs)
     label(for=idk)= title
-    //- Should use the &attributes :P
-    input.md-input(id=idk,
-    ng-model=model,
-    aria-invalid="false",
-    name=idk,
-    type=inputType,
-    max!=attributes.max,
-    min!=attributes.min,
-    require)
+    input.md-input(
+      id=idk,
+      ng-model=model,
+      aria-invalid="false",
+      name=idk,
+    )&attributes(attributes)
 
-mixin foreignListCounter(title,key)
+mixin foreignListCounter(title, key, aditionalMessage = '')
   md-list-item(ng-if="requestedsArr[" + key + "+'counter']!='0'")
-    p=title + "{{requestedsArr[" + key + "+'counter']}}"
+    p=title + "{{requestedsArr[" + key + "+'counter']}} " + aditionalMessage
 
-mixin foreignListInfo(title,key)
+mixin foreignListInfo(title,key,aditionalMessage = '')
   md-list-item(ng-if="requestedsArr[" + key + "]")
-    p=title + "{{requestedsArr[" + key + "]}}"
+    p=title + "{{requestedsArr[" + key + "]}} " +  aditionalMessage
 
 mixin foreignSelect(title,model,key,foreignObject,foreignKey,foreignDescription)
   md-input-container.md-block(flex)
     label=title
     md-select.md-no-underline(id=key,ng-value=model,ng-model=model, style="min-width: 200px;",ng-required="true")
-      md-option(ng-repeat=foreignObject + " in " + foreignObject + "s",
-      ng-value=foreignKey ,
-      ng-selected=foreignKey + "==" + model)= "{{" + foreignDescription + "}}"
+      md-option(
+        ng-repeat=foreignObject + " in " + foreignObject + "s",
+        ng-value=foreignKey ,
+        ng-selected=foreignKey + "==" + model
+      )= "{{" + foreignDescription + "}}"
 
 mixin foreignSelectDisabledOnEdit(title, model, key, foreignObject, foreignKey, foreignDescription)
   md-input-container.md-block(flex)
     label=title
-    md-select.md-no-underline(id=key,
-    ng-value=model,
-    ng-model=model,
-    style="min-width: 200px;",
-    ng-required="true",
-    ng-disabled="{{isInEditMode}}")
-      md-option(ng-repeat=foreignObject + " in " + foreignObject + "s",
-      ng-value=foreignKey,
-      ng-selected=foreignKey + "==" + model )= "{{" + foreignDescription + "}}"
+    md-select.md-no-underline(
+      id=key,
+      ng-value=model,
+      ng-model=model,
+      style="min-width: 200px;",
+      ng-required="true",
+      ng-disabled="{{isInEditMode}}"
+    )
+      md-option(
+        ng-repeat=foreignObject + " in " + foreignObject + "s",
+        ng-value=foreignKey,
+        ng-selected=foreignKey + "==" + model
+      )= "{{" + foreignDescription + "}}"
 
 mixin materialDatePicker(idk, title, model)
   md-input-container.md-block(flex-gt-sm)

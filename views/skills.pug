@@ -6,21 +6,6 @@ md-content
     md-button(ng-click="showAdvanced($event)") Adicionar
 
   md-content.md-padding(layout-xs="column", layout="column")
-      //- List
-          md-grid-tile(ng-repeat="skill in skills")
-              md-card(flex)
-                  md-card-title
-                      md-card-title-text
-                          span.md-headline Modelo - {{requestedsArr[skill.id_funcionario]}}
-                  md-card-content
-                      md-list
-                          md-list-item
-                              p  ID : {{requestedsArr[skill.id_aviao]}}
-                  md-card-actions(layout="row", layout-align="end center")
-                      md-button(ng-click="showAdvanced($event,plane)")
-                          md-icon.material-icons.md-ligh.md-avatar-icon edit
-                      md-button(ng-click="delete(plane)")
-                          md-icon.material-icons.md-ligh.md-avatar-icon close
       //- Table
       table
         thead
