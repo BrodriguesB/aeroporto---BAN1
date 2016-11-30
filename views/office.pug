@@ -47,8 +47,4 @@ block html
             label(for="den_cargo") Nome do cargo
             input#den_cargo.md-input(ng-model="item.den_cargo", aria-invalid="false",name="den_cargo",md-autofocus,required)
 
-      md-dialog-actions(layout="row", layout-align="end center")
-        md-button(type="clear")
-          md-icon.material-icons.md-ligh.md-avatar-icon refresh
-        md-button(ng-click="answer(item)")
-          md-icon.material-icons.md-ligh.md-avatar-icon done
+      +dialogFooter('item')

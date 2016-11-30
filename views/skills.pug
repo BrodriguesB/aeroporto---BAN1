@@ -1,11 +1,15 @@
-md-content
-  h1 Habilidades
-  p Lista de especialistas em modelos
-  <!-- Button trigger modal -->
-  div
-    md-button(ng-click="showAdvanced($event)") Adicionar
+extends globalMixins
 
-  md-content.md-padding(layout-xs="column", layout="column")
+block html
+  - var mainObject = 'skill'
+  md-content
+    h1 Habilidades
+    p Lista de especialistas em modelos
+    <!-- Button trigger modal -->
+    div
+      md-button(ng-click="showAdvanced($event)") Adicionar
+
+    md-content.md-padding(layout-xs="column", layout="column")
       //- Table
       table
         thead
@@ -25,27 +29,21 @@ md-content
               md-button(ng-click="customDelete(skill)")
                 md-icon.material-icons.md-ligh.md-avatar-icon close
 
+  script(type="text/ng-template" id="dialog1.tmpl.html")
+    md-dialog(layout-padding="",style="min-width:500px;")
+      form(ng-cloak,name="form")
+        //- Edit | Add
+        md-title
+          h4(layout-gt-xs="row")
+            md-input-container.md-block(flex=90)
+              label Modelo do avião
+              md-select#id_aviao.md-no-underline(ng-value="item.id_modelo",ng-model="item.id_modelo", style="min-width: 200px;",ng-required="true")
+                md-option(ng-repeat="planeModel in planeModels", ng-value="planeModel.id_modelo_aviao",ng-selected="item.id_modelo==planeModel.id_modelo_aviao") {{planeModel.cod_modelo_aviao}}
+            md-button.md-icon-button(aria-label="Fechar",ng-click="cancel()" flex=33,style="top: -15px;")
+              md-icon.material-icons close
+        md-input-container.md-block(flex-gt-sm)
+          label Funcionario
+          md-select#id_funcionario.md-no-underline(ng-value="item.id_funcionario",ng-model="item.id_funcionario", style="min-width: 200px;",ng-required="true")
+            md-option(ng-repeat="employee in employees", ng-value="employee.num_matricula",ng-selected="item.id_funcionario==employee.num_matricula") {{employee.nom_funcionario}}
 
-
-script(type="text/ng-template" id="dialog1.tmpl.html")
-  md-dialog(layout-padding="",style="min-width:500px;")
-    form(ng-cloak,name="form")
-      //- Edit | Add
-      md-title
-        h4(layout-gt-xs="row")
-          md-input-container.md-block(flex=90)
-            label Modelo do avião
-            md-select#id_aviao.md-no-underline(ng-value="item.id_modelo",ng-model="item.id_modelo", style="min-width: 200px;",ng-required="true")
-              md-option(ng-repeat="planeModel in planeModels", ng-value="planeModel.id_modelo_aviao",ng-selected="item.id_modelo==planeModel.id_modelo_aviao") {{planeModel.cod_modelo_aviao}}
-          md-button.md-icon-button(aria-label="Fechar",ng-click="cancel()" flex=33,style="top: -15px;")
-            md-icon.material-icons close
-      md-input-container.md-block(flex-gt-sm)
-        label Funcionario
-        md-select#id_funcionario.md-no-underline(ng-value="item.id_funcionario",ng-model="item.id_funcionario", style="min-width: 200px;",ng-required="true")
-          md-option(ng-repeat="employee in employees", ng-value="employee.num_matricula",ng-selected="item.id_funcionario==employee.num_matricula") {{employee.nom_funcionario}}
-
-      md-dialog-actions(layout="row", layout-align="end center")
-        md-button(type="clear")
-          md-icon.material-icons.md-ligh.md-avatar-icon refresh
-        md-button(ng-click="answer(item)")
-          md-icon.material-icons.md-ligh.md-avatar-icon done
+        +dialogFooter('item')

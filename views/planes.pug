@@ -38,8 +38,4 @@ block html
           md-select#id_modelo_aviao.md-no-underline(ng-value="item.id_modelo_aviao",ng-model="item.id_modelo_aviao", style="min-width: 200px;",ng-required="true")
             md-option(ng-repeat="planeModel in planeModels", ng-value="planeModel.id_modelo_aviao",ng-selected="item.id_modelo_aviao==planeModel.id_modelo_aviao") {{planeModel.cod_modelo_aviao}}
 
-        md-dialog-actions(layout="row", layout-align="end center")
-          md-button(type="clear")
-            md-icon.material-icons.md-ligh.md-avatar-icon refresh
-          md-button(ng-click="answer(item)")
-            md-icon.material-icons.md-ligh.md-avatar-icon done
+        +dialogFooter('item')
