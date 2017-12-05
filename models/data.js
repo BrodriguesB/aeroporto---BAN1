@@ -1,6 +1,4 @@
-const pg = require('pg');
-const connectionString = require('../configurations').getConnectionString;
-const client = new pg.Client(connectionString());
+const {execQuery} = require('../connection');
 
 const data = [
     `
@@ -112,9 +110,3 @@ const data = [
     `
 ];
 execQuery(data.join(''))
-
-async function execQuery(query){
-    client.connect();
-    await client.query(query); //TODO: exec one by one?
-    client.end();
-}

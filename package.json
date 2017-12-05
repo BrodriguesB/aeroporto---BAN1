@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "supervisor ./bin/www",
-    "postinstall": "node node_modules/bower/bin/bower install"
+    "create:tables": "node ./models/database.js",
+    "create:data": "node ./models/data.js"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
