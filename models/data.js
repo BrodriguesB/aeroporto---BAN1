@@ -1,4 +1,4 @@
-const {execQuery} = require('../connection');
+const {execQuery, finishConnection} = require('../connection');
 
 const data = [
     `
@@ -110,3 +110,4 @@ const data = [
     `
 ];
 execQuery(data.join(''))
+    .then(finishConnection)

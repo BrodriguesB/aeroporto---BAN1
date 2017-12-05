@@ -6,9 +6,7 @@ const configs = {
     getConnectionString(){
         const {user, password, host, database} = configs;
 
-        const connectionDBStr = `postgres://${user}:${password}@${host}:5432/${database}`;
-        
-        return connectionDBStr;
+        return `postgres://${user}:${password}@${host}:5432/${database}`;
     }
 };
 
