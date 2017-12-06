@@ -8,6 +8,7 @@
     <div class="row">
         <div class="input-field col s12" ng-if="airportCtrl.companhiesInitials">
             <select material-select ng-model="airportCtrl.companhiesInitialSelected">
+                <option ng-value="''" selected="selected"></option>
                 <option ng-repeat="initials in airportCtrl.companhiesInitials" ng-value="initials">{{ initials.nome }}</option>
             </select>
             <label>Sigla</label>
