@@ -6,6 +6,7 @@ import { airportAppService,AirportAppService} from "./services/AirportAppService
 import { dynamicTable, DynamicTable} from "./directives/DyanamicTableDirective";
 
 // CSS
+require('./app.css');
 require('materialize-css/dist/css/materialize.min.css');
 
 console.log(dynamicTable,DynamicTable);

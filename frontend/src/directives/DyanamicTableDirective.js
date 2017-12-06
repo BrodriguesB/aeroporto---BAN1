@@ -6,7 +6,7 @@ export /* @ngInject */ function DynamicTable() {
     return {
         restrict: 'E',
         template: [
-            '<table ng-if="tableCtrl.bindData">',
+            '<table ng-if="tableCtrl.bindData" class="striped">',
                 '<thead>',
                     '<tr>',
                     '<th ng-repeat="dataKey in tableCtrl.getFirstKeys(tableCtrl.bindData)">{{dataKey}}</th>',
@@ -18,7 +18,9 @@ export /* @ngInject */ function DynamicTable() {
                     '</tr>',
                 '</tbody>',
             '</table>',
-            ''
+            '<h5 ng-show="!tableCtrl.bindData"> ',
+                'Não há dados para exibir',
+            '</h5>',
         ].join(''),
         controller: tableController,
         controllerAs: 'tableCtrl',
