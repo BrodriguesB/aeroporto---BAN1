@@ -12,7 +12,5 @@ export /* @ngInject */ function AirportAppController(AirportAppService) {
         }
     };
 
-    _self.getFirstKeys = function(obj){
-        return Object.keys(obj[0]).filter(x => !x.includes('$$'));
-    }
+
 }

@@ -6,7 +6,7 @@ const toValues = pipe(
     map(pipe(
         tail,
         head,
-        whenStringPutQuotes,
+        whenStringPutQuotes
     ))
 );
 

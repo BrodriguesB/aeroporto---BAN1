@@ -19,18 +19,20 @@
         </div>
     </div>
 
-    <table ng-if="airportCtrl.data" ng-init="trackedData = airportCtrl.data">
-        <thead>
-        <tr>
-            <th ng-repeat="dataKey in airportCtrl.getFirstKeys(trackedData)">{{dataKey}}</th>
-        </tr>
-        </thead>
+    <dynamic-table bind-data="airportCtrl.data"></dynamic-table>
 
-        <tbody>
+    <!--<table ng-if="airportCtrl.data" ng-init="trackedData = airportCtrl.data">-->
+        <!--<thead>-->
+        <!--<tr>-->
+            <!--<th ng-repeat="dataKey in airportCtrl.getFirstKeys(trackedData)">{{dataKey}}</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
 
-        <tr ng-repeat="dataElement in trackedData">
-            <td ng-repeat="value in dataElement">{{value}}</td>
-        </tr>
-        </tbody>
-    </table>
+        <!--<tbody>-->
+
+        <!--<tr ng-repeat="dataElement in trackedData">-->
+            <!--<td ng-repeat="value in dataElement">{{value}}</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
 </div>
