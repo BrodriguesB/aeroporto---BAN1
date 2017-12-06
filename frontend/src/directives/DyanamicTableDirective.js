@@ -18,7 +18,7 @@ export /* @ngInject */ function DynamicTable() {
                     '</tr>',
                 '</tbody>',
             '</table>',
-            '<h5 ng-show="!tableCtrl.bindData"> ',
+            '<h5 ng-show="!tableCtrl.bindData || !tableCtrl.bindData.length"> ',
                 'Não há dados para exibir',
             '</h5>',
         ].join(''),

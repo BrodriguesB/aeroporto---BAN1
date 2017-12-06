@@ -44,9 +44,11 @@ export /* @ngInject */ function AirportAppController(AirportAppService) {
     };
 
     _self.fetchTableData = function () {
-        AirportAppService
-            .getTableData(_self.selectedTable)
-            .then(({data}) => _self.tableData = data);
+        if(_self.selectedTable){
+            AirportAppService
+                .getTableData(_self.selectedTable)
+                .then(({data}) => _self.tableData = data);
+        }
     };
 
     (function init() {
