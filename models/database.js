@@ -51,7 +51,12 @@ const tables = [
         id_companhia int REFERENCES companhia (id_companhia),
         id_modelo int REFERENCES modelo (id_modelo)
     );
-        
+   CREATE TABLE bagagem(
+        id_bagagem int PRIMARY KEY,
+        peso float NOT NULL,
+        despacho boolean NOT NULL
+    );
+
     CREATE TABLE voo(
         id_voo int PRIMARY KEY,	
         rota varchar(50) NOT NULL,
@@ -87,14 +92,7 @@ const tables = [
         atividade varchar (20) NOT NULL,
         hora_voo int
     );
-    
-    CREATE TABLE bagagem(
-        id_bagagem int PRIMARY KEY,
-        peso float NOT NULL,
-        despacho boolean NOT NULL
-    );
-    
-    CREATE TABLE habilitacao(
+   CREATE TABLE habilitacao(
         tempo_voo int,
         cpf numeric(11) REFERENCES tripulacao (cpf),
         id_modelo int REFERENCES MODELO (id_modelo),
