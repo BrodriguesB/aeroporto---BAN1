@@ -24,6 +24,24 @@ export /* @ngInject */ function AirportAppService($http) {
         });
 
     };
+    _self.fetchPassengerFlights = function (date) {
+        let dataObject = {};
+
+        if (date) {
+            const jsDate = new Date(date);
+            const momentDate = moment(jsDate).format('DD-MM-YYYY');
+            dataObject = {
+                date: momentDate
+            };
+        }
+
+        return $http({
+            method: 'POST',
+            url: `http://${host}:3000/search/passengers/flights`,
+            data: dataObject
+        });
+
+    };
 
     _self.searchAirportsByInitials = function (initials) {
         let dataObject = {initials};

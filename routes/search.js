@@ -50,12 +50,15 @@ router.post('/company/airports/', async function (req, res, next) {
 });
 
 //Read
-router.get('/passengers/flights/', async function (req, res, next) {
+router.post('/passengers/flights/', async function (req, res, next) {
+    const {date} = req.body;
+
     const selectQ = `
         SELECT cpf, nome, classe, necessidade, rota, data, horario, despacho FROM passageiros
             LEFT JOIN bagagem ON ( bagagem.id_bagagem = passageiros.id_bagagem)
             JOIN voo ON  (passageiros.id_voo = voo.id_voo) 
             WHERE passageiros.ckeckin = true
+            ${ date ? `AND data >= '${date}'` : ''}
     `;
 
     try {

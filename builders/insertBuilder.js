@@ -1,5 +1,5 @@
 const {pipe, tail, head, toPairs, map, join, __} = require('ramda');
-const { whenStringPutQuotes, toKeyEqualsValue, wrapWith } = require('./builders.core');
+const {whenStringPutQuotes, toKeyEqualsValue, wrapWith} = require('./builders.core');
 
 const toValues = pipe(
     toPairs,
@@ -14,7 +14,7 @@ const toInsertValues = pipe(
     map(pipe(
         toValues,
         join(','),
-        wrapWith('(',')')
+        wrapWith('(', ')')
     )),
     join(',')
 );

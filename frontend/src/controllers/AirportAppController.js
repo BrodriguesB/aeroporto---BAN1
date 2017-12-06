@@ -4,6 +4,7 @@ export /* @ngInject */ function AirportAppController(AirportAppService) {
     const _self = this;
     _self.fligthDate = '';
     _self.companhiesInitialSelected = '';
+    _self.passengerFligthDate = '';
     _self.selectedTable = '';
     _self.availableTables = [
         'pais',
@@ -40,6 +41,16 @@ export /* @ngInject */ function AirportAppController(AirportAppService) {
                 .searchAirportsByInitials(initials.nome)
                 .then(({data}) => _self.companiesData = data);
 
+        }
+    };
+
+    _self.fetchPassengerFlights = function () {
+        const date = _self.passengerFligthDate;
+
+        if(date){
+            AirportAppService
+                .fetchPassengerFlights(date)
+                .then(({data}) => _self.passengerFligthData = data);
         }
     };
 

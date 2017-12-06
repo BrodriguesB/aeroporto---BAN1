@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2>Airport App</h2>
+            <h5>Procure por data da viagem.</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="input-field col s6">
+                <input placeholder="Data do da viagem" type="text" class="datepicker" ng-model="airportCtrl.passengerFligthDate">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <a class="waves-effect waves-light btn"
+               ng-click="airportCtrl.fetchPassengerFlights()">Consultar</a>
+        </div>
+    </div>
+
+    <dynamic-table bind-data="airportCtrl.passengerFligthData"></dynamic-table>
+</div>
