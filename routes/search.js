@@ -1,32 +1,34 @@
 const express = require('express');
 const router = express.Router();
-const { tablesToInsertQuery } = require('../builders/insertBuilder');
-const { tableToUpdateQuery } = require('../builders/updateBuilder');
-const { execQuery, finishConnection } = require('../connection');
+const {tablesToInsertQuery} = require('../builders/insertBuilder');
+const {tableToUpdateQuery} = require('../builders/updateBuilder');
+const {execQuery, finishConnection} = require('../connection');
 
 //Read
-router.get('/fligths/', async function(req, res, next) {
-    const table = 'voo';
+router.post('/flights', async function (req, res, next) {
+    const {date} = req.body;
     const selectQ = `
         SELECT rota, horario, duracao, nome FROM voo
             JOIN aeronave ON (aeronave.id_aeronave = voo.id_aeronave)
-            JOIN companhia ON (companhia.id_companhia = aeronave.id_companhia)    
+            JOIN companhia ON (companhia.id_companhia = aeronave.id_companhia)
+            ${ date ? `WHERE voo.data >= '${date}'` : ''}
     `;
+
 
     try {
         const queryResult = await execQuery(selectQ);
         console.log(queryResult.rows);
         res.status(200).json(queryResult.rows);
-    } catch (e){
+    } catch (e) {
         console.error(e);
-        res.status(500).json({success:false});
+        res.status(500).json({success: false});
     } finally {
         finishConnection();
     }
 });
 
 //Read
-router.get('/company/airports/', async function(req, res, next) {
+router.get('/company/airports/', async function (req, res, next) {
     const selectQ = `
         SELECT companhia.nome, aeroporto.sigla, aeroporto.nome, sigla_estado, status FROM companhia
             JOIN aeroporto_companhia ON (aeroporto_companhia.id_companhia = companhia.id_companhia)
@@ -37,16 +39,16 @@ router.get('/company/airports/', async function(req, res, next) {
         const queryResult = await execQuery(selectQ);
         console.log(queryResult.rows);
         res.status(200).json(queryResult.rows);
-    } catch (e){
+    } catch (e) {
         console.error(e);
-        res.status(500).json({success:false});
+        res.status(500).json({success: false});
     } finally {
         finishConnection();
     }
 });
 
 //Read
-router.get('/passengers/fligths/', async function(req, res, next) {
+router.get('/passengers/flights/', async function (req, res, next) {
     const selectQ = `
         SELECT cpf, nome, classe, necessidade, rota, data, horario, despacho FROM passageiros
             LEFT JOIN bagagem ON ( bagagem.id_bagagem = passageiros.id_bagagem)
@@ -58,9 +60,9 @@ router.get('/passengers/fligths/', async function(req, res, next) {
         const queryResult = await execQuery(selectQ);
         console.log(queryResult.rows);
         res.status(200).json(queryResult.rows);
-    } catch (e){
+    } catch (e) {
         console.error(e);
-        res.status(500).json({success:false});
+        res.status(500).json({success: false});
     } finally {
         finishConnection();
     }

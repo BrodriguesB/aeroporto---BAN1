@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2>Airport App</h2>
+            <h5>Procure por voos a partir da data.</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <div class="input-field col s6">
+                <input placeholder="Data do voo" type="text" class="datepicker" ng-model="airportCtrl.fligthDate">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <a class="waves-effect waves-light btn"
+               ng-click="airportCtrl.openSearchFlightsByDate(airportCtrl.fligthDate)">Consultar</a>
+        </div>
+    </div>
+
+    <table ng-if="airportCtrl.data" ng-init="trackedData = airportCtrl.data">
+        <thead>
+        <tr>
+            <th ng-repeat="dataKey in airportCtrl.getFirstKeys(trackedData)">{{dataKey}}</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr ng-repeat="dataElement in trackedData">
+            <td ng-repeat="value in dataElement">{{value}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

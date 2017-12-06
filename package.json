@@ -3,21 +3,39 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "supervisor ./bin/www",
+    "start": "(supervisor ./bin/www) && (npm run webpack:watch)",
     "create:tables": "node ./models/database.js",
-    "create:data": "node ./models/data.js"
+    "create:data": "node ./models/data.js",
+    "webpack:watch": "webpack --watch"
   },
   "dependencies": {
+    "angular": "^1.6.7",
+    "angular-animate": "^1.6.7",
+    "angular-aria": "^1.6.7",
+    "angular-messages": "^1.6.7",
     "body-parser": "~1.15.1",
-    "bower": "~1.8.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "~4.13.4",
+    "jquery": "^3.2.1",
+    "materialize-css": "^0.100.2",
+    "moment": "^2.19.3",
     "morgan": "~1.7.0",
     "pg": "^6.1.0",
     "pug": "^2.0.0-beta6",
     "ramda": "^0.25.0",
     "serve-favicon": "~2.3.0",
     "supervisor": "^0.12.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-angularjs-annotate": "^0.8.2",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.7",
+    "expose-loader": "^0.7.4",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "style-loader": "^0.19.0",
+    "webpack": "^3.10.0"
   }
 }

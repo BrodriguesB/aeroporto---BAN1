@@ -1,7 +1,7 @@
 const configs = {
     "database":"aeroporto",
     "user":"postgres",
-    "password":"adm",
+    "password":"postgres",
     "host": "localhost",
     getConnectionString(){
         const {user, password, host, database} = configs;
