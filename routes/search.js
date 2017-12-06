@@ -8,7 +8,7 @@ const {execQuery, finishConnection} = require('../connection');
 router.post('/flights', async function (req, res, next) {
     const {date} = req.body;
     const selectQ = `
-        SELECT rota, horario, duracao, nome FROM voo
+        SELECT rota, data, horario, duracao, nome FROM voo
             JOIN aeronave ON (aeronave.id_aeronave = voo.id_aeronave)
             JOIN companhia ON (companhia.id_companhia = aeronave.id_companhia)
             ${ date ? `WHERE voo.data >= '${date}'` : ''}
@@ -28,11 +28,13 @@ router.post('/flights', async function (req, res, next) {
 });
 
 //Read
-router.get('/company/airports/', async function (req, res, next) {
+router.post('/company/airports/', async function (req, res, next) {
+    const {initials} = req.body;
     const selectQ = `
         SELECT companhia.nome, aeroporto.sigla, aeroporto.nome, sigla_estado, status FROM companhia
             JOIN aeroporto_companhia ON (aeroporto_companhia.id_companhia = companhia.id_companhia)
             JOIN aeroporto ON (aeroporto.sigla = aeroporto_companhia.sigla )
+            ${ initials ? `WHERE companhia.nome = '${initials}'` : ''}
     `;
 
     try {

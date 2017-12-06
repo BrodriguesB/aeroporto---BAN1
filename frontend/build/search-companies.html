@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h2>Airport App</h2>
+            <h5>Procure por aeroportos das companhias</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12" ng-if="airportCtrl.companhiesInitials">
+            <select material-select ng-model="airportCtrl.companhiesInitialSelected">
+                <option ng-repeat="initials in airportCtrl.companhiesInitials" ng-value="initials">{{ initials.nome }}</option>
+            </select>
+            <label>Sigla</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <a class="waves-effect waves-light btn"
+               ng-click="airportCtrl.searchAirportsByInitials()">Consultar</a>
+        </div>
+    </div>
+
+    <dynamic-table bind-data="airportCtrl.companiesData"></dynamic-table>
+</div>

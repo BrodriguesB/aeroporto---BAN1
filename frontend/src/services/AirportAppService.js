@@ -23,5 +23,22 @@ export /* @ngInject */ function AirportAppService($http) {
             data: dataObject
         });
 
+    };
+
+    _self.searchAirportsByInitials = function (initials) {
+        let dataObject = {initials};
+
+        return $http({
+            method: 'POST',
+            url: `http://${host}:3000/search/company/airports/`,
+            data: dataObject
+        });
+    };
+
+    _self.getTableData = function (table) {
+        return $http({
+            method: 'GET',
+            url: `http://${host}:3000/api/tables/${table}`,
+        });
     }
 }

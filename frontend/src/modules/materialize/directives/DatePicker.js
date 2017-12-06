@@ -1,6 +1,6 @@
 export const materializeDatePicker = 'datepicker';
 
-export /* @ngInject */ function MaterializeDatePicker($timeout) {
+export /* @ngInject */ function MaterializeDatePicker() {
     return {
         restrict: 'C',
         link: function (scope, element, attr) {
